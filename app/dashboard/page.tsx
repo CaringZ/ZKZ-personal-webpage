@@ -136,7 +136,7 @@ export default function Dashboard() {
               <div
                 className="absolute inset-0 z-0 blur"
                 style={{
-                  backgroundImage: "url('/images/1.png')",
+                  backgroundImage: "url('${basePath}/images/1.png')",
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
@@ -163,7 +163,7 @@ export default function Dashboard() {
               <div
                 className="absolute inset-0 z-0 blur"
                 style={{
-                  backgroundImage: "url('/images/2.png')",
+                  backgroundImage: "url('${basePath}/images/2.png')",
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
@@ -182,7 +182,7 @@ export default function Dashboard() {
               <div
                 className="absolute inset-0 z-0 blur"
                 style={{
-                  backgroundImage: "url('/images/3.png')",
+                  backgroundImage: "url('${basePath}/images/3.png')",
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
