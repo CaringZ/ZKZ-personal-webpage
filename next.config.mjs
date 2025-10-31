@@ -2,6 +2,7 @@
 const nextConfig = {
   output: 'export',
   basePath: '/ZKZ-personal-webpage',
+  trailingSlash: true,
   typescript: {
     ignoreBuildErrors: true,
   },
