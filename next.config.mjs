@@ -1,8 +1,16 @@
+const repo = 'ZKZ-personal-webpage';
+const assetPrefix = `/${repo}`;
+const basePath = `/${repo}`;
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  basePath: '/ZKZ-personal-webpage',
-  assetPrefix: '/ZKZ-personal-webpage',
+  assetPrefix: assetPrefix,
+  basePath: basePath,
+
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
+  },
 
   trailingSlash: true,
   typescript: {
@@ -13,4 +21,4 @@ const nextConfig = {
   },
 }
 
-export default nextConfig
+export default nextConfig;
