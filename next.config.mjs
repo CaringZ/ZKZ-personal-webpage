@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
+  basePath: '/ZKZ-personal-webpage',
   typescript: {
     ignoreBuildErrors: true,
   },
