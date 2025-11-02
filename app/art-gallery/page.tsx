@@ -1,10 +1,8 @@
 "use client"
-
 import { useState, useEffect } from "react"
 import { TimelineGallery } from "@/components/timeline-gallery"
 import { ArtworkModal } from "@/components/artwork-modal"
 import { GalleryHeader } from "@/components/gallery-header"
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
 export interface Artwork {
   id: string
@@ -21,7 +19,7 @@ const artworks: Artwork[] = [
     title: "军师",
     year: "2025",
     description: "未来都市的霓虹灯光，科技与人性的交织。",
-    image: `${basePath}/1.png`,
+    image: `/1.png`,
     category: "人物",
   },
   {
@@ -29,7 +27,7 @@ const artworks: Artwork[] = [
     title: "雨后夕阳",
     year: "2024",
     description: "魔法世界的宏伟建筑，充满神秘与冒险。",
-    image: `${basePath}/2.png`,
+    image: `/2.png`,
     category: "风景",
   },
   {
@@ -37,7 +35,7 @@ const artworks: Artwork[] = [
     title: "沼泽地",
     year: "2023",
     description: "深空探索的科幻场景，人类的星际梦想。",
-    image: `${basePath}/3.png`,
+    image: `/3.png`,
     category: "场景",
   },
   {
@@ -45,7 +43,7 @@ const artworks: Artwork[] = [
     title: "石树谷2",
     year: "2023",
     description: "后启示录世界的荒凉景象，生存与希望的挣扎。",
-    image: `${basePath}/4.png`,
+    image: `/4.png`,
     category: "场景",
   },
   {
@@ -53,7 +51,7 @@ const artworks: Artwork[] = [
     title: "石树谷1",
     year: "2023",
     description: "神秘的水下世界，探索未知的海洋奇观。",
-    image: `${basePath}/5.png`,
+    image: `/5.png`,
     category: "场景",
   },
   {
@@ -61,7 +59,7 @@ const artworks: Artwork[] = [
     title: "冰封秘境",
     year: "2023",
     description: "探索时间与空间的交织，通过抽象的色彩表达永恒的瞬间。",
-    image: `${basePath}/6.png`,
+    image: `/6.png`,
     category: "场景",
   },
   {
@@ -69,7 +67,7 @@ const artworks: Artwork[] = [
     title: "神域",
     year: "2023",
     description: "探索时间与空间的交织，通过抽象的色彩表达永恒的瞬间。",
-    image: `${basePath}/6.1.png`,
+    image: `/6.1.png`,
     category: "场景",
   },
   {
@@ -77,7 +75,7 @@ const artworks: Artwork[] = [
     title: "传送门",
     year: "2023",
     description: "现代都市的光影交错，记录着每个人的故事与梦想。",
-    image: `${basePath}/7.png`,
+    image: `/7.png`,
     category: "科幻",
   },
   {
@@ -85,7 +83,7 @@ const artworks: Artwork[] = [
     title: "月牙迷城",
     year: "2023",
     description: "聆听大自然的呼吸，感受生命的律动与和谐。",
-    image: `${basePath}/8.png`,
+    image: `/8.png`,
     category: "场景",
   },
   {
@@ -93,7 +91,7 @@ const artworks: Artwork[] = [
     title: "荒漠行者",
     year: "2023",
     description: "聆听大自然的呼吸，感受生命的律动与和谐。",
-    image: `${basePath}/9.png`,
+    image: `/9.png`,
     category: "场景",
   },
   {
@@ -101,7 +99,7 @@ const artworks: Artwork[] = [
     title: "荒野守卫",
     year: "2023",
     description: "聆听大自然的呼吸，感受生命的律动与和谐。",
-    image: `${basePath}/10.png`,
+    image: `/10.png`,
     category: "角色",
   },
   {
@@ -109,7 +107,7 @@ const artworks: Artwork[] = [
     title: "摘花女",
     year: "2022",
     description: "聆听大自然的呼吸，感受生命的律动与和谐。",
-    image: `${basePath}/11.png`,
+    image: `/11.png`,
     category: "角色",
   },
   {
@@ -117,7 +115,7 @@ const artworks: Artwork[] = [
     title: "场景写生",
     year: "2022",
     description: "聆听大自然的呼吸，感受生命的律动与和谐。",
-    image: `${basePath}/11.1.png`,
+    image: `/11.1.png`,
     category: "场景油画",
   },
   {
@@ -125,7 +123,7 @@ const artworks: Artwork[] = [
     title: "静物写生",
     year: "2022",
     description: "聆听大自然的呼吸，感受生命的律动与和谐。",
-    image: `${basePath}/12.jpg`,
+    image: `/12.jpg`,
     category: "静物油画",
   },
   {
@@ -133,7 +131,7 @@ const artworks: Artwork[] = [
     title: "红色圣女",
     year: "2021",
     description: "聆听大自然的呼吸，感受生命的律动与和谐。",
-    image: `${basePath}/13.jpg`,
+    image: `/13.jpg`,
     category: "石膏",
   },
   {
@@ -141,7 +139,7 @@ const artworks: Artwork[] = [
     title: "女性2",
     year: "2021",
     description: "聆听大自然的呼吸，感受生命的律动与和谐。",
-    image: `${basePath}/14.jpg`,
+    image: `/14.jpg`,
     category: "角色",
   },
   {
@@ -149,7 +147,7 @@ const artworks: Artwork[] = [
     title: "男性",
     year: "2021",
     description: "聆听大自然的呼吸，感受生命的律动与和谐。",
-    image: `${basePath}/15.jpg`,
+    image: `/15.jpg`,
     category: "角色",
   },
   {
@@ -157,7 +155,7 @@ const artworks: Artwork[] = [
     title: "女性1",
     year: "2021",
     description: "聆听大自然的呼吸，感受生命的律动与和谐。",
-    image: `${basePath}/16.jpg`,
+    image: `/16.jpg`,
     category: "角色",
   },
   {
@@ -165,7 +163,7 @@ const artworks: Artwork[] = [
     title: "高铁外景2",
     year: "2021",
     description: "聆听大自然的呼吸，感受生命的律动与和谐。",
-    image: `${basePath}/17.jpg`,
+    image: `/17.jpg`,
     category: "角色",
   },
   {
@@ -173,7 +171,7 @@ const artworks: Artwork[] = [
     title: "高铁外景1",
     year: "2021",
     description: "聆听大自然的呼吸，感受生命的律动与和谐。",
-    image: `${basePath}/18.jpg`,
+    image: `/18.jpg`,
     category: "角色",
   },
   {
@@ -181,7 +179,7 @@ const artworks: Artwork[] = [
     title: "Joker",
     year: "2021",
     description: "聆听大自然的呼吸，感受生命的律动与和谐。",
-    image: `${basePath}/19.1.jpg`,
+    image: `/19.1.jpg`,
     category: "角色",
   },
   {
@@ -189,7 +187,7 @@ const artworks: Artwork[] = [
     title: "Godfather",
     year: "2021",
     description: "聆听大自然的呼吸，感受生命的律动与和谐。",
-    image: `${basePath}/19.jpg`,
+    image: `/19.jpg`,
     category: "角色",
   },
   {
@@ -197,7 +195,7 @@ const artworks: Artwork[] = [
     title: "国画2",
     year: "2020",
     description: "聆听大自然的呼吸，感受生命的律动与和谐。",
-    image: `${basePath}/20.jpg`,
+    image: `/20.jpg`,
     category: "角色",
   },
   {
@@ -205,7 +203,7 @@ const artworks: Artwork[] = [
     title: "国画1",
     year: "2020",
     description: "聆听大自然的呼吸，感受生命的律动与和谐。",
-    image: `${basePath}/21.jpg`,
+    image: `/21.jpg`,
     category: "角色",
   },
   {
@@ -213,7 +211,7 @@ const artworks: Artwork[] = [
     title: "工笔人物",
     year: "2020",
     description: "聆听大自然的呼吸，感受生命的律动与和谐。",
-    image: `${basePath}/22.jpg`,
+    image: `/22.jpg`,
     category: "角色",
   },
   {
@@ -221,7 +219,7 @@ const artworks: Artwork[] = [
     title: "版画",
     year: "2020",
     description: "聆听大自然的呼吸，感受生命的律动与和谐。",
-    image: `${basePath}/23.png`,
+    image: `/23.png`,
     category: "角色",
   },
   {
@@ -229,7 +227,7 @@ const artworks: Artwork[] = [
     title: "素描静物写生",
     year: "2020",
     description: "聆听大自然的呼吸，感受生命的律动与和谐。",
-    image: `${basePath}/24.jpg`,
+    image: `/24.jpg`,
     category: "角色",
   },
   {
@@ -237,7 +235,7 @@ const artworks: Artwork[] = [
     title: "素描石膏写生2",
     year: "2020",
     description: "聆听大自然的呼吸，感受生命的律动与和谐。",
-    image: `${basePath}/25.jpg`,
+    image: `/25.jpg`,
     category: "角色",
   },
   {
@@ -245,7 +243,7 @@ const artworks: Artwork[] = [
     title: "素描石膏写生1",
     year: "2020",
     description: "聆听大自然的呼吸，感受生命的律动与和谐。",
-    image: `${basePath}/26.jpg`,
+    image: `/26.jpg`,
     category: "角色",
   },
 ]
