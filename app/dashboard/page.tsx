@@ -65,29 +65,29 @@ export default function Dashboard() {
     {
       id: "business",
       href: "/business-cases",
-      label: "智能商业闭环",
-      headline: "AI驱动的全链路增长方案",
-      description: "通过AI赋能电商自动化，将复杂的市场策略转化为可执行的数据故事，实现15000+ SKU从0到1的快速上线与验证。",
-      metricLabel: "上线SKU",
-      metricValue: "15000+",
+      label: "商业增长探索",
+      headline: "代码与数据的商业协奏",
+      description: "以AI为引擎，驱动电商自动化的构想。将繁复的市场策略，转译成清晰的数据故事，最终见证了超过15000个新品从概念到上线的完整旅程。",
+      metricLabel: "案例历程",
+      metricValue: "从0到15000+的诞生",
     },
     {
       id: "projects",
       href: "/projects",
-      label: "智能工具生态系统",
-      headline: "AI驱动的开发项目合辑",
-      description: "以AI作为核心，驱动生产链路的效率杀手锏。",
+      label: "从原型到产品",
+      headline: "与代码和算法共舞的日子",
+      description: "一个探索AI技术边界与应用潜能的创新空间。在这里，创意与AI碰撞，经历从概念原型到成熟产品的蜕变，最终在数字世界中化为现实。",
       metricLabel: "项目覆盖",
-      metricValue: "跨平台",
+      metricValue: "构建高效工具生态",
     },
     {
       id: "art",
       href: "/art-gallery",
       label: "个人绘画心路历程",
       headline: "时间线画廊",
-      description: "生成式艺术与传统创作媒介融合，呈现实验性视觉探索。",
+      description: "一条沉浸式的时间长廊，不仅记录了创作工具从实体画笔到智能算法的演进，也铺陈出不同阶段的风格探索与学习足迹。",
       metricLabel: "作品类型",
-      metricValue: "插画 / 3D",
+      metricValue: "绘画 / 3D",
     },
   ]
 
@@ -95,17 +95,17 @@ export default function Dashboard() {
     {
       id: "business-summary",
       title: "案例亮点",
-      body: "通过AI赋能电商自动化，将复杂的市场策略转化为可执行的数据故事，实现个人1.5个月内15000+SKU从0到1的快速上线与验证。",
+      body: "以AI为引擎，驱动电商自动化的构想。将繁复的市场策略，转译成清晰的数据故事，最终见证了超过15000个新品从概念到上线的完整旅程。",
     },
     {
       id: "projects-summary",
-      title: "研发节奏",
-      body: "这里是探索AI技术边界与应用潜能的创新空间。通过一系列从概念原型到成熟产品的开发实践，本人致力于将创意想法结合AI转化为现实。",
+      title: "构建高效工具生态",
+      body: "一个探索AI技术边界与应用潜能的创新空间。在这里，创意与AI碰撞，经历从概念原型到成熟产品的蜕变，最终在数字世界中化为现实。",
     },
     {
       id: "art-summary",
       title: "创作基调",
-      body: "呈现了创作工具从实体画笔到智能算法的演进，以及各阶段的学习经历与风格探索，时间线沉浸式画廊。",
+      body: "一条沉浸式的时间长廊，不仅记录了创作工具从实体画笔到智能算法的演进，也铺陈出不同阶段的风格探索与学习足迹。",
     },
   ] as const
 
@@ -120,9 +120,9 @@ export default function Dashboard() {
     >
       <div className="flex w-full flex-col gap-14 px-6 py-12 sm:px-10 lg:px-20 lg:py-14 xl:px-32">
         <header className="space-y-4 text-center">
-          <h1 className="text-5xl font-bold tracking-tight text-foreground sm:text-6xl lg:text-7xl">项目主页</h1>
+          <h1 className="text-5xl font-bold tracking-tight text-foreground sm:text-6xl lg:text-7xl">创想之旅</h1>
           <p className="mx-auto max-w-5xl text-xl text-muted-foreground sm:text-2xl">
-            从商业策略到视觉叙事，呈现我在策略规划、产品开发与艺术创作中的整体能力。
+             始于策略，成于创造。这里记录着商业思考与视觉艺术交织的实践。
           </p>
         </header>
 
