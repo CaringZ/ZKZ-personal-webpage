@@ -258,7 +258,7 @@ function SectionCard({ section, layout = "stacked", reverse = false }: SectionCa
           <span className={`${reverse ? "lg:text-right" : ""}`}>{section.label}</span>
         </div>
         <h2
-          className={`text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-6xl ${
+          className={`text-3xl font-semibold tracking-tight text-foreground sm:text-4xl lg:text-5xl ${
             isInline ? (reverse ? "text-center lg:text-right" : "text-center lg:text-left") : ""
           }`}
         >
