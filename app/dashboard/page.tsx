@@ -4,6 +4,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { ArrowUpRight } from "lucide-react"
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
 export default function Dashboard() {
   const [isVisible, setIsVisible] = useState(false)
@@ -136,7 +137,7 @@ export default function Dashboard() {
               <div
                 className="absolute inset-0 z-0 blur"
                 style={{
-                  backgroundImage: `url(/images/1.png)`,
+                  backgroundImage: `url(${basePath}/images/1.png)`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
@@ -163,7 +164,7 @@ export default function Dashboard() {
               <div
                 className="absolute inset-0 z-0 blur"
                 style={{
-                  backgroundImage: `url(/images/2.png)`,
+                  backgroundImage: `url(${basePath}/images/2.png)`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
@@ -182,7 +183,7 @@ export default function Dashboard() {
               <div
                 className="absolute inset-0 z-0 blur"
                 style={{
-                  backgroundImage: `url(/images/3.png)`,
+                  backgroundImage: `url(${basePath}/images/3.png)`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
