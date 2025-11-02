@@ -1,6 +1,6 @@
 "use client"
 
-import { Fragment, useEffect, useRef, useState } from "react"
+import { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react"
 import type { MouseEvent as ReactMouseEvent, TouchEvent as ReactTouchEvent } from "react"
 import * as THREE from "three"
 
@@ -55,6 +55,17 @@ export default function ParticleAnimation({ onEnter, returnFeedback }: ParticleA
     { label: "微信", value: "z1900009979" },
     { label: "邮箱", value: "1035067533@qq.com" },
   ]
+  
+  // 使用 useLayoutEffect 在浏览器绘制前同步隐藏滚动条，防止闪烁
+  useLayoutEffect(() => {
+    const originalStyle = window.getComputedStyle(document.body).overflow;
+    document.body.style.overflow = 'hidden';
+
+    // 组件卸载时恢复原始样式
+    return () => {
+      document.body.style.overflow = originalStyle;
+    };
+  }, []); // 空依赖数组确保只在挂载和卸载时运行
 
   useEffect(() => {
     if (!returnFeedback) {
@@ -681,72 +692,6 @@ export default function ParticleAnimation({ onEnter, returnFeedback }: ParticleA
     }
   }, [onEnter])
 
-  const resetOrientation = () => {
-    if (!sceneRef.current) return
-    sceneRef.current.rotationX = 0
-    sceneRef.current.rotationY = 0
-    sceneRef.current.isDragging = false
-    sceneRef.current.points.rotation.set(0, 0, 0)
-  }
-
-  const handleMouseDown = (event: ReactMouseEvent) => {
-    if (!sceneRef.current) return
-    if (event.button === 1) {
-      event.preventDefault()
-      resetOrientation()
-      return
-    }
-    if (event.button !== 0) return
-    sceneRef.current.isDragging = true
-    sceneRef.current.previousMouseX = event.clientX
-    sceneRef.current.previousMouseY = event.clientY
-  }
-
-  const handleMouseMove = (event: ReactMouseEvent) => {
-    if (!sceneRef.current || !sceneRef.current.isDragging) return
-
-    const deltaX = event.clientX - sceneRef.current.previousMouseX
-    const deltaY = event.clientY - sceneRef.current.previousMouseY
-
-    sceneRef.current.rotationY -= deltaX * 0.005
-    sceneRef.current.rotationX -= deltaY * 0.005
-
-    sceneRef.current.previousMouseX = event.clientX
-    sceneRef.current.previousMouseY = event.clientY
-  }
-
-  const handleMouseUp = () => {
-    if (sceneRef.current) {
-      sceneRef.current.isDragging = false
-    }
-  }
-
-  const handleTouchStart = (event: ReactTouchEvent) => {
-    if (!sceneRef.current) return
-    sceneRef.current.isDragging = true
-    sceneRef.current.previousMouseX = event.touches[0].clientX
-    sceneRef.current.previousMouseY = event.touches[0].clientY
-  }
-
-  const handleTouchMove = (event: ReactTouchEvent) => {
-    if (!sceneRef.current || !sceneRef.current.isDragging) return
-
-    const deltaX = event.touches[0].clientX - sceneRef.current.previousMouseX
-    const deltaY = event.touches[0].clientY - sceneRef.current.previousMouseY
-
-    sceneRef.current.rotationY -= deltaX * 0.005
-    sceneRef.current.rotationX -= deltaY * 0.005
-
-    sceneRef.current.previousMouseX = event.touches[0].clientX
-    sceneRef.current.previousMouseY = event.touches[0].clientY
-  }
-
-  const handleTouchEnd = () => {
-    if (sceneRef.current) {
-      sceneRef.current.isDragging = false
-    }
-  }
-
   return (
     <div
       className="relative w-full h-screen bg-black text-white"
@@ -759,14 +704,7 @@ export default function ParticleAnimation({ onEnter, returnFeedback }: ParticleA
     >
       <canvas
         ref={canvasRef}
-        className="block w-full h-full cursor-grab active:cursor-grabbing"
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
+        className="block w-full h-full"
       />
       <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
         <div className="mt-[50rem] flex max-w-5xl flex-col items-center gap-45 px-6 pb-60 text-white pointer-events-auto">

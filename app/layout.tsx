@@ -10,7 +10,6 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "我的作品集 - Portfolio Showcase",
   description: "探索我的商业案例、项目开发与美术创作",
-  generator: "v0.app",
 }
 
 export default function RootLayout({
