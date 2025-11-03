@@ -118,21 +118,24 @@ export default function Dashboard() {
         transition: "opacity 0.5s ease, transform 0.7s ease",
       }}
     >
-      <div className="flex w-full flex-col gap-14 px-6 py-12 sm:px-10 lg:px-20 lg:py-14 xl:px-32">
-        <header className="space-y-4 text-center">
-          <h1 className="text-5xl font-bold tracking-tight text-foreground sm:text-6xl lg:text-7xl">创想之旅</h1>
-          <p className="mx-auto max-w-5xl text-xl text-muted-foreground sm:text-2xl">
-             始于策略，成于创造。这里记录着商业思考与视觉艺术交织的实践。
-          </p>
-        </header>
+      <div className="px-[var(--page-gutter)] py-12 sm:py-14 lg:py-16 2xl:py-20">
+        <div className="mx-auto flex w-full max-w-[var(--content-max-width)] flex-col gap-12 sm:gap-14 lg:gap-16">
+          <header className="space-y-4 text-center">
+            <h1 className="text-balance text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl 2xl:text-7xl 3xl:text-8xl">
+              创想之旅
+            </h1>
+            <p className="mx-auto max-w-4xl text-pretty text-lg text-muted-foreground sm:text-xl lg:max-w-5xl lg:text-2xl">
+              始于策略，成于创造。这里记录着商业思考与视觉艺术交织的实践。
+            </p>
+          </header>
 
-        <div className="grid grid-cols-1 gap-10 xl:grid-cols-12">
+          <div className="grid grid-cols-1 gap-10 xl:grid-cols-12 2xl:gap-12 3xl:gap-14 2xl:px-6 3xl:px-10">
           {/* --- 第一行 --- */}
           <div className="group/card card-breathe relative h-full xl:col-span-8" data-index="0">
             <span className="card-outer-glow pointer-events-none absolute -inset-8 rounded-[46px] opacity-0 transition duration-500 group-hover/card:opacity-95 group-focus-within/card:opacity-95" />
             <Link
               href={primarySections[0].href}
-              className="group animated-card-glow relative flex h-full w-full items-start justify-between gap-12 overflow-hidden rounded-3xl shadow-none ring-1 ring-border/40 transition duration-500 hover:-translate-y-1 hover:ring-white/60"
+              className="group animated-card-glow relative flex h-full w-full items-start justify-between gap-8 overflow-hidden rounded-3xl shadow-none ring-1 ring-border/40 transition duration-500 hover:-translate-y-1 hover:ring-white/60 sm:gap-10 lg:gap-12 2xl:gap-14"
             >
               <div
                 className="absolute inset-0 z-0 blur"
@@ -145,21 +148,21 @@ export default function Dashboard() {
               <SectionCard section={primarySections[0]} layout="inline" />
             </Link>
           </div>
-          <SummaryCard
-            block={summaryBlocks[0]}
-            className={`h-full rounded-3xl bg-zinc-900 px-8 py-14 xl:col-span-4 ring-1 ring-border/80 ${glowBorderTopRight}`}
-          />
+            <SummaryCard
+              block={summaryBlocks[0]}
+              className={`h-full rounded-3xl bg-zinc-900 px-6 py-10 sm:px-7 sm:py-12 lg:px-8 lg:py-14 2xl:px-10 2xl:py-16 xl:col-span-4 ring-1 ring-border/80 ${glowBorderTopRight}`}
+            />
 
           {/* --- 第二行 --- */}
-          <SummaryCard
-            block={summaryBlocks[1]}
-            className={`h-full rounded-3xl bg-zinc-900 px-8 py-14 xl:col-span-4 ring-1 ring-border/80 ${glowBorderTopLeft}`}
-          />
+            <SummaryCard
+              block={summaryBlocks[1]}
+              className={`h-full rounded-3xl bg-zinc-900 px-6 py-10 sm:px-7 sm:py-12 lg:px-8 lg:py-14 2xl:px-10 2xl:py-16 xl:col-span-4 ring-1 ring-border/80 ${glowBorderTopLeft}`}
+            />
           <div className="group/card card-breathe relative h-full xl:col-span-8" data-index="1">
             <span className="card-outer-glow pointer-events-none absolute -inset-8 rounded-[46px] opacity-0 transition duration-500 group-hover/card:opacity-95 group-focus-within/card:opacity-95" />
             <Link
               href={primarySections[1].href}
-              className="group animated-card-glow relative flex h-full w-full items-start justify-between gap-12 overflow-hidden rounded-3xl shadow-none ring-1 ring-border/40 transition duration-500 hover:-translate-y-1 hover:ring-white/60"
+              className="group animated-card-glow relative flex h-full w-full items-start justify-between gap-8 overflow-hidden rounded-3xl shadow-none ring-1 ring-border/40 transition duration-500 hover:-translate-y-1 hover:ring-white/60 sm:gap-10 lg:gap-12 2xl:gap-14"
             >
               <div
                 className="absolute inset-0 z-0 blur"
@@ -178,7 +181,7 @@ export default function Dashboard() {
             <span className="card-outer-glow pointer-events-none absolute -inset-8 rounded-[46px] opacity-0 transition duration-500 group-hover/card:opacity-95 group-focus-within/card:opacity-95" />
             <Link
               href={primarySections[2].href}
-              className="group animated-card-glow relative flex h-full w-full items-start justify-between gap-12 overflow-hidden rounded-3xl shadow-none ring-1 ring-border/40 transition duration-500 hover:-translate-y-1 hover:ring-white/60"
+              className="group animated-card-glow relative flex h-full w-full items-start justify-between gap-8 overflow-hidden rounded-3xl shadow-none ring-1 ring-border/40 transition duration-500 hover:-translate-y-1 hover:ring-white/60 sm:gap-10 lg:gap-12 2xl:gap-14"
             >
               <div
                 className="absolute inset-0 z-0 blur"
@@ -191,10 +194,11 @@ export default function Dashboard() {
               <SectionCard section={primarySections[2]} layout="inline" />
             </Link>
           </div>
-          <SummaryCard
-            block={summaryBlocks[2]}
-            className={`h-full rounded-3xl bg-zinc-900 px-8 py-14 xl:col-span-4 ring-1 ring-border/80 ${glowBorderTopRight}`}
-          />
+            <SummaryCard
+              block={summaryBlocks[2]}
+              className={`h-full rounded-3xl bg-zinc-900 px-6 py-10 sm:px-7 sm:py-12 lg:px-8 lg:py-14 2xl:px-10 2xl:py-16 xl:col-span-4 ring-1 ring-border/80 ${glowBorderTopRight}`}
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -228,11 +232,13 @@ function SectionCard({ section, layout = "stacked", reverse = false }: SectionCa
   const isInline = layout === "inline"
   const arrowClasses =
     "absolute text-muted-foreground/70 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1"
-  const arrowPosition = reverse ? "left-8 top-8 lg:left-10" : "right-8 top-8 lg:right-10"
+  const arrowPosition = reverse
+    ? "left-6 top-6 sm:left-8 sm:top-8 lg:left-10"
+    : "right-6 top-6 sm:right-8 sm:top-8 lg:right-10"
 
   return (
     <div
-      className={`relative z-10 flex h-full w-full flex-col justify-start gap-8 rounded-[26px] bg-black/30 px-10 py-24 lg:py-20 ${
+      className={`relative z-10 flex h-full w-full flex-col justify-start gap-6 rounded-[26px] bg-black/30 px-6 py-12 sm:gap-8 sm:px-8 sm:py-16 lg:px-10 lg:py-20 2xl:px-12 2xl:py-24 ${
         isInline ? (reverse ? "lg:flex-row-reverse lg:justify-between lg:items-start" : "lg:flex-row lg:justify-between lg:items-start") : ""
       }`}
     >
@@ -241,10 +247,10 @@ function SectionCard({ section, layout = "stacked", reverse = false }: SectionCa
         className={`relative z-10 flex w-full ${
           isInline
             ? reverse
-              ? "flex-col lg:max-w-[50%] lg:items-end lg:text-right"
-              : "flex-col lg:max-w-[55%]"
+              ? "flex-col lg:max-w-[58%] lg:items-end lg:text-right 2xl:max-w-[55%]"
+              : "flex-col lg:max-w-[62%] 2xl:max-w-[60%]"
             : "flex-col"
-        } gap-5`}
+        } gap-4 sm:gap-5`}
       >
         <div
           className={`flex items-center ${
@@ -253,30 +259,36 @@ function SectionCard({ section, layout = "stacked", reverse = false }: SectionCa
                 ? "justify-center lg:justify-between"
                 : "justify-center lg:justify-between"
               : "justify-between"
-          } text-sm text-muted-foreground`}
+          } text-xs text-muted-foreground sm:text-sm`}
         >
           <span className={`${reverse ? "lg:text-right" : ""}`}>{section.label}</span>
         </div>
         <h2
-          className={`text-3xl font-semibold tracking-tight text-foreground sm:text-4xl lg:text-5xl ${
+          className={`text-balance text-3xl font-semibold tracking-tight text-foreground sm:text-4xl lg:text-5xl 2xl:text-6xl ${
             isInline ? (reverse ? "text-center lg:text-right" : "text-center lg:text-left") : ""
           }`}
         >
           {section.headline}
         </h2>
-        {!isInline && <p className="max-w-2xl text-base text-muted-foreground sm:text-lg">{section.description}</p>}
+        {!isInline && (
+          <p className="text-pretty text-base text-muted-foreground sm:text-lg lg:text-xl 2xl:max-w-2xl">
+            {section.description}
+          </p>
+        )}
       </div>
       <div
-        className={`relative z-10 flex w-full flex-col items-start justify-between gap-4 text-sm text-muted-foreground ${
+        className={`relative z-10 flex w-full flex-col items-start justify-between gap-3 text-sm text-muted-foreground sm:gap-4 ${
           isInline
             ? reverse
-              ? "lg:max-w-[26%] lg:items-start lg:text-left"
-              : "lg:max-w-[28%] lg:items-end lg:text-right"
+              ? "lg:max-w-none lg:items-start lg:text-left lg:min-w-[20rem] 2xl:min-w-[22rem] 3xl:min-w-[24rem]"
+              : "lg:max-w-none lg:items-end lg:text-right lg:min-w-[20rem] 2xl:min-w-[22rem] 3xl:min-w-[24rem]"
             : ""
         }`}
       >
-        <span className="uppercase tracking-[0.3em] text-xs">{section.metricLabel}</span>
-        <span className="text-3xl font-bold text-foreground sm:text-4xl">{section.metricValue}</span>
+        <span className="uppercase tracking-[0.3em] text-[0.65rem] sm:text-xs">{section.metricLabel}</span>
+        <span className="text-2xl font-bold text-foreground sm:text-3xl lg:text-[2.75rem] 2xl:text-[2.9rem] whitespace-nowrap">
+          {section.metricValue}
+        </span>
       </div>
     </div>
   )
@@ -302,9 +314,11 @@ function SummaryCard({ block, className = "" }: SummaryCardProps) {
       <div className="flex items-center justify-between">
         <div className="text-sm font-medium uppercase tracking-[0.3em] text-muted-foreground">{block.title}</div>
       </div>
-      <p className="text-lg leading-relaxed text-muted-foreground/90">{block.body}</p>
+      <p className="text-pretty text-base leading-relaxed text-muted-foreground/90 sm:text-lg lg:text-xl">
+        {block.body}
+      </p>
       {block.details && (
-        <ul className="summary-card__meta space-y-1.5 text-sm text-muted-foreground/80">
+        <ul className="summary-card__meta space-y-1.5 text-sm text-muted-foreground/80 sm:text-base">
           {block.details.map((item) => (
             <li key={item} className="flex items-center gap-2">
               <span className="summary-card__dot" aria-hidden="true" />

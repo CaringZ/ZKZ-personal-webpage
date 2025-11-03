@@ -1,16 +1,11 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { ArrowLeft } from "lucide-react"
 import TitleScreen from "./case-study/title-screen"
-import SceneOne from "./case-study/scene-one"
-import SceneTwo from "./case-study/scene-two"
-import SceneThree from "./case-study/scene-three"
-import SceneFour from "./case-study/scene-four"
-import SceneFive from "./case-study/scene-five"
-import SummaryScreen from "./case-study/summary-screen"
+import PipelineScene from "./case-study/pipeline-scene"
 
 export default function HorizontalScrollCaseStudy() {
   const [isActivated, setIsActivated] = useState(false)
@@ -18,25 +13,11 @@ export default function HorizontalScrollCaseStudy() {
   const [isAnimating, setIsAnimating] = useState(false)
   const touchStartRef = useRef<number | null>(null)
 
-  const scenes = [
-    <TitleScreen
-      key="title"
-      isActivated={isActivated}
-      onActivate={() => {
-        setIsActivated(true)
-      }}
-    />,
-    <SceneOne key="scene-1" />,
-    <SceneTwo key="scene-2" />,
-    <SceneThree key="scene-3" />,
-    <SceneFour key="scene-4" />,
-    <SceneFive key="scene-5" />,
-    <SummaryScreen key="summary" />,
-  ] as const
+  const sceneCount = 2
 
   const clampIndex = useCallback(
-    (next: number) => Math.max(0, Math.min(scenes.length - 1, next)),
-    [scenes.length],
+    (next: number) => Math.max(0, Math.min(sceneCount - 1, next)),
+    [sceneCount],
   )
 
   const moveTo = useCallback(
@@ -54,6 +35,20 @@ export default function HorizontalScrollCaseStudy() {
     [clampIndex],
   )
 
+  const scenes = useMemo(() => {
+    const handleActivate = () => {
+      setIsActivated(true)
+    }
+    const handleBackToTitle = () => {
+      setIsActivated(false)
+      moveTo(0)
+    }
+    return [
+      <TitleScreen key="title" isActivated={isActivated} onActivate={handleActivate} />,
+      <PipelineScene key="pipeline" onRequestBack={handleBackToTitle} />,
+    ]
+  }, [isActivated, moveTo])
+
   const goToScene = useCallback((direction: 1 | -1) => moveTo((current) => current + direction), [moveTo])
 
   useEffect(() => {
@@ -64,10 +59,10 @@ export default function HorizontalScrollCaseStudy() {
     const blockedKeys = new Set([" ", "Spacebar", "ArrowDown", "ArrowUp", "PageDown", "PageUp", "End", "Home"])
 
     const handleWheel = (event: WheelEvent) => {
-      event.preventDefault()
-      if (!isActivated || isAnimating) {
+      if (!isActivated || isAnimating || activeIndex !== 0) {
         return
       }
+      event.preventDefault()
       if (event.deltaY > 25) {
         goToScene(1)
       } else if (event.deltaY < -25) {
@@ -79,16 +74,16 @@ export default function HorizontalScrollCaseStudy() {
       if (!blockedKeys.has(event.key)) {
         return
       }
-      event.preventDefault()
-      if (!isActivated || isAnimating) {
+      if (!isActivated || isAnimating || activeIndex !== 0) {
         return
       }
+      event.preventDefault()
       if (event.key === "ArrowDown" || event.key === "PageDown" || event.key === " " || event.key === "Spacebar") {
         goToScene(1)
       } else if (event.key === "ArrowUp" || event.key === "PageUp" || event.key === "Home") {
         goToScene(-1)
       } else if (event.key === "End") {
-        moveTo(scenes.length - 1)
+        moveTo(sceneCount - 1)
       }
     }
 
@@ -97,7 +92,7 @@ export default function HorizontalScrollCaseStudy() {
     }
 
     const handleTouchMove = (event: TouchEvent) => {
-      if (!isActivated) {
+      if (!isActivated || activeIndex !== 0) {
         event.preventDefault()
         return
       }
@@ -133,7 +128,7 @@ export default function HorizontalScrollCaseStudy() {
       window.removeEventListener("touchmove", handleTouchMove)
       window.removeEventListener("touchend", handleTouchEnd)
     }
-  }, [goToScene, isActivated, isAnimating, moveTo, scenes.length])
+  }, [activeIndex, goToScene, isActivated, isAnimating, moveTo, sceneCount])
 
   useEffect(() => {
     if (!isActivated) {
@@ -160,23 +155,12 @@ export default function HorizontalScrollCaseStudy() {
           返回主页
         </Link>
       )}
-      {activeIndex > 0 && (
-        <button
-          type="button"
-          aria-label="回到主标题"
-          onClick={() => moveTo(0)}
-          className="group fixed bottom-8 right-8 z-50 flex items-center gap-2 rounded-full border border-border/60 bg-background/80 px-4 py-2 text-sm font-medium text-muted-foreground backdrop-blur transition hover:border-border hover:text-foreground"
-        >
-          <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-          回到主标题
-        </button>
-      )}
       <div className="fixed inset-0 overflow-hidden bg-background">
         <motion.div
           className="flex h-full w-full flex-nowrap"
           animate={{ x: `-${activeIndex * 100}vw` }}
           transition={{ duration: 1.15, ease: easing }}
-          style={{ width: `${scenes.length * 100}vw` }}
+          style={{ width: `${sceneCount * 100}vw` }}
           onAnimationComplete={() => setIsAnimating(false)}
         >
           {scenes.map((scene, index) => (

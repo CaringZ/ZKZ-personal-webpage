@@ -1,7 +1,6 @@
 "use client"
 
 import { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react"
-import type { MouseEvent as ReactMouseEvent, TouchEvent as ReactTouchEvent } from "react"
 import * as THREE from "three"
 
 interface ParticleAnimationProps {
@@ -58,14 +57,32 @@ export default function ParticleAnimation({ onEnter, returnFeedback }: ParticleA
   
   // 使用 useLayoutEffect 在浏览器绘制前同步隐藏滚动条，防止闪烁
   useLayoutEffect(() => {
-    const originalStyle = window.getComputedStyle(document.body).overflow;
-    document.body.style.overflow = 'hidden';
+    if (typeof window === "undefined") {
+      return
+    }
+
+    const originalBodyOverflow = document.body.style.overflow
+    const originalBodyOverscroll = document.body.style.overscrollBehavior
+    const originalHtmlOverflow = document.documentElement.style.overflow
+    const originalHtmlOverflowY = document.documentElement.style.overflowY
+
+    document.body.style.overflow = "hidden"
+    document.body.style.overscrollBehavior = "none"
+    document.documentElement.style.overflow = "hidden"
+    document.documentElement.style.overflowY = "hidden"
+    document.body.classList.add("no-scrollbar")
+    document.documentElement.classList.add("no-scrollbar")
 
     // 组件卸载时恢复原始样式
     return () => {
-      document.body.style.overflow = originalStyle;
-    };
-  }, []); // 空依赖数组确保只在挂载和卸载时运行
+      document.body.style.overflow = originalBodyOverflow
+      document.body.style.overscrollBehavior = originalBodyOverscroll
+      document.documentElement.style.overflow = originalHtmlOverflow
+      document.documentElement.style.overflowY = originalHtmlOverflowY
+      document.body.classList.remove("no-scrollbar")
+      document.documentElement.classList.remove("no-scrollbar")
+    }
+  }, []) // 空依赖数组确保只在挂载和卸载时运行
 
   useEffect(() => {
     if (!returnFeedback) {
@@ -694,7 +711,7 @@ export default function ParticleAnimation({ onEnter, returnFeedback }: ParticleA
 
   return (
     <div
-      className="relative w-full h-screen bg-black text-white"
+      className="relative w-full h-screen overflow-hidden bg-black text-white"
       style={{
         fontFamily: '"Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", serif',
         opacity: isTransitioning ? 0 : 1,
