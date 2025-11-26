@@ -176,7 +176,7 @@ export function WelcomeFooter() {
                                 />
                             </div>
                             <a
-                                href="https://github.com/yourusername"
+                                href="https://github.com/CaringZ"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="group cursor-pointer"
@@ -189,7 +189,7 @@ export function WelcomeFooter() {
                             <div
                                 className="group cursor-pointer"
                                 onClick={() => {
-                                    navigator.clipboard.writeText("your.email@example.com");
+                                    navigator.clipboard.writeText("zkz19000057@gmail.com");
                                     toast.success("已复制Email");
                                 }}
                             >
