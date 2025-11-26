@@ -208,7 +208,7 @@ export function WelcomeFooter() {
 
                         <div className="text-center mt-0.5">
                             <p className="text-[4px] font-light tracking-wider text-zinc-600">
-                                © 2025 Your Name. All Rights Reserved.
+                                © 2025 朱康智. All Rights Reserved.
                             </p>
                         </div>
                     </div>
