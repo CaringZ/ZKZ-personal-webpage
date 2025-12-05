@@ -9,6 +9,7 @@ import Link from "next/link"
 import { type Project } from "@/lib/projects-data"
 import { MatureProjectTheme } from "@/components/projects/mature-theme"
 import { PluginProjectTheme } from "@/components/projects/plugin-theme"
+import { PluginThemeLora } from "@/components/projects/plugin-theme-lora"
 import { HobbyProjectTheme } from "@/components/projects/hobby-theme"
 
 interface ProjectDetailClientProps {
@@ -35,7 +36,11 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
                     transition={{ duration: 0.5 }}
                 >
                     {project.type === "mature" && <MatureProjectTheme project={project} />}
-                    {project.type === "plugin" && <PluginProjectTheme project={project} />}
+                    {project.type === "plugin" && project.id === "plugin-3" ? (
+                        <PluginThemeLora project={project} />
+                    ) : project.type === "plugin" ? (
+                        <PluginProjectTheme project={project} />
+                    ) : null}
                     {project.type === "hobby" && <HobbyProjectTheme project={project} />}
                 </motion.div>
             </AnimatePresence>

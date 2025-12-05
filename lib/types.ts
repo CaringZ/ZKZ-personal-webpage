@@ -59,6 +59,8 @@ export interface Project {
             problem?: string // Specific problem this item solves
             solution?: string // How it solves it
             features?: string[] // Key features/steps
+            trainingImage?: string
+            trainingThoughts?: string
         }[]
     }
 

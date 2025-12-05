@@ -336,6 +336,82 @@ export const hobbyProjects: Project[] = [
     ]
   },
   {
+    id: "hobby-6",
+    title: "3D Paint Studio",
+    description: "又名 Nano Banana Studio：面向 3D 艺术家、独立开发者的 AI 材质验证与节点逆向工具，保持模型几何与机位不变，快速给白膜上色并输出可复刻的 Blender 节点方案。",
+    type: "hobby",
+    technologies: ["Gemini 2.5", "Three.js", "TypeScript", "Blender"],
+    year: "2025",
+    status: "active",
+    github: "#",
+    hobby: {
+      tagline: "赋予白膜生命：从 2D 灵感到 3D 材质节点的智能美术助理。",
+      motivation: "在 Blender 与 Substance Painter 之间反复试错太耗时：拆 UV、烘焙、堆材质后才发现配色糟糕；AI 上色又常常篡改几何。需要一个“中间层”——先在 10 秒内验证色彩/材质方向，再直接告诉我 Blender 节点怎么连。",
+      features: [
+        {
+          title: "上下文感知材质引擎",
+          desc: "识别怪物/机甲等语义，按对象类型生成符合物理逻辑的皮肤、金属、漆面。四层标签管控磨损、材质组分等细节。",
+          icon: "Cpu"
+        },
+        {
+          title: "严谨色彩分区",
+          desc: "在 Prompt 中强制 60/30/10 的主辅色分割，生成有层次的配色而非一键滤镜。",
+          icon: "Layout"
+        },
+        {
+          title: "材质逆向分析",
+          desc: "一键“材质分析”输出 Blender 节点连接报告：Base Color 码、Roughness、噪声节点接法全给出。",
+          icon: "Activity"
+        },
+        {
+          title: "专业工作流 UI",
+          desc: "深色玻璃拟态界面 + 对比滑块，上传/分析全程有 Loading 与降级回退，交互有信任感。",
+          icon: "Zap"
+        }
+      ],
+      useCases: [
+        {
+          title: "独立游戏角色定调",
+          pain: "美术总监需要快速验证多套配色，传统流程要拆 UV、堆材质，成本高。",
+          solution: "上传白膜，切换预设风格几分钟生成多版方案供投票，无需手绘草图。"
+        },
+        {
+          title: "Blender 新手的节点导师",
+          pain: "想做磨损喷漆金属但不会连节点。",
+          solution: "生成满意图后点“分析”，得到 Musgrave/ColorRamp 等节点接法与参数提示。"
+        },
+        {
+          title: "概念设计快速统一风格",
+          pain: "Kitbash 资产材质风格不统一，整体构图混乱。",
+          solution: "截图上传选择“统一材质”标签，AI 按同一视觉语言重涂并保持几何。"
+        }
+      ],
+      devLog: [
+        { status: "active", text: "Node Graph Generation 2.0：深度解析 Roughness/IOR/Normal 并输出可运行的 Blender Python 脚本" },
+        { status: "todo", text: "3D 贴图投影：生成纹理投射回 UV，导出可用贴图" },
+        { status: "todo", text: "Blender Add-on 深度集成：视口截图 -> AI 分析 -> 自动建节点" }
+      ],
+      codeSnippet: {
+        title: "Blender 节点生成 (目标形态)",
+        code: "bsdf = nodes.new('ShaderNodeBsdfPrincipled')\nnoise = nodes.new('ShaderNodeTexMusgrave')\nlinks.new(noise.outputs['Height'], bsdf.inputs['Roughness'])"
+      }
+    },
+    insights: [
+      {
+        title: "挑战: AI 擅自改几何",
+        content: "起因: 早期模型总给角色加头发、加配件。思路: 换用 gemini-2.5-flash-image-preview，Prompt 加强负约束并用原图作 Mask。结果: 保持几何与机位稳定。收获: 约束与模型选择同等重要。"
+      },
+      {
+        title: "挑战: 质感模糊",
+        content: "起因: 选择“亚光”时全局像塑料包裹，缺乏材质区分。思路: V3.5 引入“材质组分”，按金属/布料/皮肤分区设定反射与漫反射。结果: 单图内材质分层清晰。收获: 全局滤镜不如组件化描述。"
+      },
+      {
+        title: "挑战: 交互信任感",
+        content: "起因: 分析耗时几秒，用户以为卡死。思路: 全按钮加载态与“Rendering/Analyzing”提示，复制节点数据提供 execCommand 回退。结果: 用户反馈体验稳定。收获: 工具类产品的状态反馈是刚需。"
+      }
+    ]
+  },
+  {
     id: "hobby-5",
 
     title: "自动打卡小助手",

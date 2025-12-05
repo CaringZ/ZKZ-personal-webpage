@@ -27,6 +27,9 @@ export function MatureProjectTheme({ project }: MatureProjectThemeProps) {
     }
 
     const ultimatePain = project.mature?.motivation || project.description
+    const assetBase = `/showcase/mature/${project.id}`
+    const blueprintSrc = `${assetBase}/blueprint.png`
+    const techDemoSrc = (idx: number) => `${assetBase}/tech-demo-${String(idx + 1).padStart(2, '0')}.png`
 
     const splitInsight = (text: string) => {
         const [body, takeaway] = text.split("收获:")
@@ -142,24 +145,16 @@ export function MatureProjectTheme({ project }: MatureProjectThemeProps) {
                                     </div>
 
                                     <div className="absolute inset-0 flex items-center justify-center">
-                                        <div className="text-center space-y-6">
-                                            <div className="relative">
-                                                <div className="absolute inset-0 bg-blue-500/20 blur-3xl rounded-full" />
-                                                <Cpu className="w-20 h-20 text-white/20 mx-auto relative z-10" />
-                                            </div>
-                                            <div className="space-y-2">
-                                                <div className="text-white/30 font-mono text-xs tracking-[0.2em]">SYSTEM ARCHITECTURE DIAGRAM</div>
-                                                <div className="inline-block px-3 py-1 bg-white/5 rounded-full text-[10px] text-white/40 border border-white/5">
-                                                    ASSET SLOT: BLUEPRINT_SVG
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <img
+                                            src={blueprintSrc}
+                                            alt="System architecture blueprint"
+                                            className="max-w-full max-h-full object-contain drop-shadow-[0_10px_30px_rgba(255,255,255,0.12)]"
+                                            loading="lazy"
+                                        />
                                     </div>
                                 </div>
                             </div>
                             <div className="mt-3 flex justify-between text-[10px] text-white/20 font-mono uppercase tracking-widest">
-                                <span>Fig 1.1 - High Level Overview</span>
-                                <span>Scale: 1:100</span>
                             </div>
                         </div>
                     </div>
@@ -278,11 +273,11 @@ export function MatureProjectTheme({ project }: MatureProjectThemeProps) {
 
                                     <div className="space-y-4">
                                         <h3 className="text-3xl font-bold text-white">{item.title}</h3>
-                                        <div className="space-y-4 text-slate-400">
-                                            <div>
-                                                <strong className="text-white/30 text-[10px] uppercase tracking-widest block mb-2">{item.subtitle}</strong>
-                                                <p className="leading-relaxed">{item.desc}</p>
-                                            </div>
+                                    <div className="space-y-4 text-slate-400">
+                                        <div>
+                                            <strong className="text-white/30 text-[10px] uppercase tracking-widest block mb-2">{item.subtitle}</strong>
+                                            <p className="leading-relaxed">{item.desc}</p>
+                                        </div>
                                             <div className={`flex gap-2 flex-wrap ${idx % 2 === 0 ? 'md:justify-end' : ''}`}>
                                                 {item.stats.map((stat, sIdx) => (
                                                     <span key={sIdx} className="text-[10px] border border-white/10 px-2 py-1 rounded text-white/40 font-mono">{stat}</span>
@@ -294,11 +289,12 @@ export function MatureProjectTheme({ project }: MatureProjectThemeProps) {
 
                                 <div className={`${idx % 2 === 0 ? 'md:order-2' : 'md:order-1'} relative`}>
                                     <div className="aspect-video bg-[#050505] rounded-lg border border-white/10 overflow-hidden relative group-hover:border-white/20 transition-colors shadow-2xl">
-                                        <div className="absolute inset-0 flex items-center justify-center">
-                                            <div className="text-[10px] text-white/20 font-mono border border-white/5 px-3 py-1 rounded bg-white/[0.02]">
-                                                ASSET SLOT: TECH_DEMO_{idx + 1}
-                                            </div>
-                                        </div>
+                                        <img
+                                            src={techDemoSrc(idx)}
+                                            alt={`${item.title} visual`}
+                                            className="absolute inset-0 w-full h-full object-cover"
+                                            loading="lazy"
+                                        />
                                         {/* Holographic Overlay Effect */}
                                         <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                                     </div>

@@ -52,6 +52,9 @@ const iconMap: Record<string, any> = {
 export function HobbyProjectTheme({ project }: HobbyProjectThemeProps) {
     const [activeTab, setActiveTab] = useState<"preview" | "terminal">("preview")
     const ultimatePain = project.description
+    const assetBase = `/showcase/hobby/${project.id}`
+    const screenRecording = `${assetBase}/screen-recording.mp4`
+    const screenPoster = `${assetBase}/screen-recording.png`
     const splitInsight = (text: string) => {
         const [body, takeaway] = text.split("收获:")
         return {
@@ -269,20 +272,17 @@ export function HobbyProjectTheme({ project }: HobbyProjectThemeProps) {
                             {/* Content */}
                             <div className="absolute inset-0 top-9 bg-[#1e1e1e]">
                                 {activeTab === "preview" ? (
-                                    <div className="w-full h-full flex items-center justify-center relative">
-                                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#333_1px,transparent_1px)] bg-[size:20px_20px] opacity-20" />
-                                        <div className="text-center space-y-6 relative z-10">
-                                            <div className="w-24 h-24 mx-auto rounded-full bg-[#252526] border border-[#333] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-500">
-                                                <Play className="w-10 h-10 text-[#4fc1ff] ml-1" />
-                                            </div>
-                                            <div className="space-y-2">
-                                                <div className="text-xs text-[#4fc1ff] border border-[#4fc1ff]/30 px-4 py-1.5 rounded-full bg-[#4fc1ff]/10 inline-block font-mono">
-                                                    ASSET SLOT: SCREEN RECORDING
-                                                </div>
-                                                <p className="text-[#666] text-xs max-w-xs mx-auto">
-                                                    Interactive preview not available in static mode.
-                                                </p>
-                                            </div>
+                                    <div className="w-full h-full flex items-center justify-center relative bg-[#0f0f0f]">
+                                        <video
+                                            src={screenRecording}
+                                            poster={screenPoster}
+                                            controls
+                                            className="w-full h-full object-contain"
+                                            playsInline
+                                            preload="metadata"
+                                        />
+                                        <div className="absolute bottom-3 right-3 text-[10px] text-[#4fc1ff] border border-[#4fc1ff]/30 px-3 py-1 rounded-full bg-[#4fc1ff]/10 font-mono">
+                                            {screenRecording}
                                         </div>
                                     </div>
                                 ) : (

@@ -20,6 +20,10 @@ export function PluginProjectTheme({ project }: PluginProjectThemeProps) {
     useTransform(scrollYProgress, [0, 1], [0, -100])
 
     const ultimatePain = project.plugin?.painPoint.desc || project.description
+    const assetBase = `/showcase/plugins/${project.id}`
+    const painPointSrc = `${assetBase}/painpoint.png`
+    const impactBefore = `${assetBase}/impact-before.png`
+    const impactAfter = `${assetBase}/impact-after.png`
     const splitInsight = (text: string) => {
         const [body, takeaway] = text.split("收获:")
         return {
@@ -104,8 +108,14 @@ export function PluginProjectTheme({ project }: PluginProjectThemeProps) {
                                         </div>
                                     ))}
                                 </div>
-                                <div className="z-10 text-xs text-emerald-500 border border-emerald-500/30 px-4 py-2 rounded bg-black/80 backdrop-blur shadow-lg">
-                                    ASSET SLOT: 混乱的工作流截图
+                                <img
+                                    src={painPointSrc}
+                                    alt="Pain point visual"
+                                    className="z-10 max-h-full max-w-full object-contain drop-shadow-[0_10px_30px_rgba(16,185,129,0.25)]"
+                                    loading="lazy"
+                                />
+                                <div className="absolute bottom-4 right-4 text-[10px] text-emerald-500 border border-emerald-500/20 px-3 py-1.5 rounded bg-black/70 backdrop-blur shadow-lg">
+                                    {painPointSrc}
                                 </div>
                             </div>
                         </div>
@@ -361,8 +371,8 @@ export function PluginProjectTheme({ project }: PluginProjectThemeProps) {
 
                         <div className="relative aspect-video bg-[#0f0f0f] rounded-xl border border-emerald-900/30 overflow-hidden group shadow-2xl">
                             <ComparisonSlider
-                                beforeImage="ASSET_SLOT: BEFORE_OPTIMIZATION"
-                                afterImage="ASSET_SLOT: AFTER_OPTIMIZATION"
+                                beforeImage={impactBefore}
+                                afterImage={impactAfter}
                                 beforeLabel="BEFORE"
                                 afterLabel="AFTER"
                             />
