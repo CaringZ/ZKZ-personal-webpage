@@ -10,6 +10,7 @@ import { type Project } from "@/lib/projects-data"
 import { MatureProjectTheme } from "@/components/projects/mature-theme"
 import { PluginProjectTheme } from "@/components/projects/plugin-theme"
 import { PluginThemeLora } from "@/components/projects/plugin-theme-lora"
+import { PluginThemeBlender } from "@/components/projects/plugin-theme-blender"
 import { HobbyProjectTheme } from "@/components/projects/hobby-theme"
 
 interface ProjectDetailClientProps {
@@ -38,6 +39,8 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
                     {project.type === "mature" && <MatureProjectTheme project={project} />}
                     {project.type === "plugin" && project.id === "plugin-3" ? (
                         <PluginThemeLora project={project} />
+                    ) : project.type === "plugin" && project.id === "plugin-4" ? (
+                        <PluginThemeBlender project={project} />
                     ) : project.type === "plugin" ? (
                         <PluginProjectTheme project={project} />
                     ) : null}

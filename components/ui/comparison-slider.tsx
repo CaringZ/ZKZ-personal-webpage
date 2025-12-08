@@ -1,24 +1,51 @@
 "use client"
 
 import { useState, useRef, useEffect, useCallback } from "react"
-import { ArrowRight, ArrowLeftRight } from "lucide-react"
+import ReactDOM from "react-dom"
+import { ArrowRight, ArrowLeftRight, Maximize2, X } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
+import { cn } from "@/lib/utils"
 
 interface ComparisonSliderProps {
     beforeImage: string
     afterImage: string
     beforeLabel?: string
     afterLabel?: string
+    isFullscreen?: boolean
 }
 
 export function ComparisonSlider({
     beforeImage,
     afterImage,
     beforeLabel = "BEFORE",
-    afterLabel = "AFTER"
+    afterLabel = "AFTER",
+    isFullscreen = false
 }: ComparisonSliderProps) {
     const [isResizing, setIsResizing] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
     const [position, setPosition] = useState(50)
     const containerRef = useRef<HTMLDivElement>(null)
+
+    // Prevent scrolling when lightbox is open
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = "hidden"
+        } else {
+            document.body.style.overflow = "unset"
+        }
+        return () => {
+            document.body.style.overflow = "unset"
+        }
+    }, [isOpen])
+
+    // Handle escape key
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === "Escape") setIsOpen(false)
+        }
+        window.addEventListener("keydown", handleKeyDown)
+        return () => window.removeEventListener("keydown", handleKeyDown)
+    }, [])
 
     const handleMove = useCallback((clientX: number) => {
         if (!containerRef.current) return
@@ -75,10 +102,22 @@ export function ComparisonSlider({
     return (
         <div
             ref={containerRef}
-            className="relative w-full h-full select-none cursor-ew-resize overflow-hidden group"
+            className={cn(
+                "relative select-none cursor-ew-resize overflow-hidden group",
+                isFullscreen ? "w-auto h-auto inline-block" : "w-full h-full"
+            )}
             onMouseDown={handleMouseDown}
             onTouchStart={handleTouchStart}
         >
+            {/* Hidden image for sizing in fullscreen mode */}
+            {isFullscreen && (
+                <img
+                    src={afterImage}
+                    alt=""
+                    className="max-w-[90vw] max-h-[85vh] opacity-0 pointer-events-none"
+                />
+            )}
+
             {/* After Image (Background) */}
             <div className="absolute inset-0 w-full h-full">
                 <div className="absolute inset-0 flex items-center justify-center bg-[#0f0f0f]">
@@ -96,21 +135,18 @@ export function ComparisonSlider({
 
             {/* Before Image (Foreground - Clipped) */}
             <div
-                className="absolute inset-0 h-full overflow-hidden border-r border-emerald-500/50 bg-[#0a0a0a]"
-                style={{ width: `${position}%` }}
+                className="absolute inset-0 w-full h-full select-none"
+                style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}
             >
-                <div className="absolute inset-0 w-full h-full">
-                    {/* We need to ensure the image stays full width relative to container, not the clipped div */}
-                    <div className="absolute inset-0 w-[100vw] max-w-none h-full flex items-center justify-center" style={{ width: containerRef.current ? containerRef.current.offsetWidth : '100%' }}>
-                        {beforeImage.startsWith("ASSET_SLOT") ? (
-                            <div className="flex flex-col items-center justify-center text-emerald-500/20">
-                                <span className="font-mono text-lg mb-2">{beforeLabel}</span>
-                                <span className="text-xs border border-emerald-900/50 px-2 py-1 rounded bg-black/50">{beforeImage}</span>
-                            </div>
-                        ) : (
-                            <img src={beforeImage} alt={beforeLabel} className="w-full h-full object-cover" />
-                        )}
-                    </div>
+                <div className="absolute inset-0 flex items-center justify-center bg-[#0a0a0a]">
+                    {beforeImage.startsWith("ASSET_SLOT") ? (
+                        <div className="flex flex-col items-center justify-center text-emerald-500/20">
+                            <span className="font-mono text-lg mb-2">{beforeLabel}</span>
+                            <span className="text-xs border border-emerald-900/50 px-2 py-1 rounded bg-black/50">{beforeImage}</span>
+                        </div>
+                    ) : (
+                        <img src={beforeImage} alt={beforeLabel} className="w-full h-full object-cover" />
+                    )}
                 </div>
             </div>
 
@@ -131,6 +167,61 @@ export function ComparisonSlider({
             <div className="absolute bottom-4 right-4 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <span className="text-xs font-bold text-emerald-500 bg-black/80 px-2 py-1 rounded border border-emerald-500/30">{afterLabel}</span>
             </div>
+            {/* Maximize Button */}
+            {!isFullscreen && (
+                <button
+                    className="absolute top-4 right-4 z-30 p-2 rounded-full bg-black/50 backdrop-blur border border-white/10 text-white/70 opacity-0 group-hover:opacity-100 transition-all hover:bg-black/70 hover:text-white"
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        setIsOpen(true)
+                    }}
+                >
+                    <Maximize2 className="w-4 h-4" />
+                </button>
+            )}
+
+            {/* Lightbox Modal */}
+            {typeof document !== 'undefined' && !isFullscreen && ReactDOM.createPortal(
+                <AnimatePresence>
+                    {isOpen && (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/95 backdrop-blur-sm p-4 md:p-10"
+                            onClick={() => setIsOpen(false)}
+                        >
+                            <button
+                                className="absolute top-4 right-4 p-2 rounded-full bg-black/50 backdrop-blur border border-white/10 text-white/70 hover:text-white transition-colors z-50"
+                                onClick={(e) => {
+                                    e.stopPropagation()
+                                    setIsOpen(false)
+                                }}
+                            >
+                                <X className="w-6 h-6" />
+                            </button>
+
+                            <motion.div
+                                initial={{ scale: 0.9, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                exit={{ scale: 0.9, opacity: 0 }}
+                                transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                                className="relative w-full h-full max-w-7xl max-h-[90vh] flex items-center justify-center"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                <ComparisonSlider
+                                    beforeImage={beforeImage}
+                                    afterImage={afterImage}
+                                    beforeLabel={beforeLabel}
+                                    afterLabel={afterLabel}
+                                    isFullscreen={true}
+                                />
+                            </motion.div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>,
+                document.body
+            )}
         </div>
     )
 }

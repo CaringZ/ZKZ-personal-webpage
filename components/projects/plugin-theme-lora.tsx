@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform } from "framer-motion"
 import { ArrowRight, Box, Layers, Settings, Sliders, Terminal, Wand2, Wrench, Hammer, Zap, Image as ImageIcon, CheckCircle2 } from "lucide-react"
 import type { Project } from "@/lib/projects-data"
 import { ComparisonSlider } from "@/components/ui/comparison-slider"
+import { ImageLightbox } from "@/components/ui/image-lightbox"
 
 interface PluginThemeLoraProps {
     project: Project
@@ -19,11 +20,17 @@ export function PluginThemeLora({ project }: PluginThemeLoraProps) {
 
     useTransform(scrollYProgress, [0, 1], [0, -100])
 
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
+    const withBasePath = (path?: string) => {
+        if (!path) return ''
+        return path.startsWith('http') ? path : `${basePath}${path}`
+    }
+
     const ultimatePain = project.plugin?.painPoint.desc || project.description
     const assetBase = `/showcase/plugins/${project.id}`
-    const painPointSrc = `${assetBase}/painpoint.png`
-    const impactBefore = `${assetBase}/impact-before.png`
-    const impactAfter = `${assetBase}/impact-after.png`
+    const painPointSrc = withBasePath(`${assetBase}/painpoint.png`)
+    const impactBefore = withBasePath(`${assetBase}/impact-before.png`)
+    const impactAfter = withBasePath(`${assetBase}/impact-after.png`)
     const splitInsight = (text: string) => {
         const [body, takeaway] = text.split("收获:")
         return {
@@ -33,7 +40,7 @@ export function PluginThemeLora({ project }: PluginThemeLoraProps) {
     }
 
     return (
-        <div ref={containerRef} className="relative min-h-[250vh] bg-[#0a0a0a] text-emerald-50 font-mono selection:bg-emerald-500/30">
+        <div ref={containerRef} className="relative min-h-[250vh] bg-[#0a0a0a] text-zinc-400 font-mono selection:bg-emerald-500/30">
             {/* Blueprint Grid Background */}
             <div className="fixed inset-0 z-0 pointer-events-none opacity-10">
                 <div className="absolute inset-0 bg-[linear-gradient(to_right,#10b981_1px,transparent_1px),linear-gradient(to_bottom,#10b981_1px,transparent_1px)] bg-[size:40px_40px]" />
@@ -54,10 +61,10 @@ export function PluginThemeLora({ project }: PluginThemeLoraProps) {
                         <Wrench className="w-5 h-5" />
                         <span className="text-sm tracking-widest uppercase">工具规格说明书 // Tool Spec</span>
                     </div>
-                    <h1 className="text-5xl md:text-7xl font-bold text-emerald-100 tracking-tight">
+                    <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight">
                         {project.title}
                     </h1>
-                    <p className="text-emerald-400/60 max-w-xl mx-auto text-lg">
+                    <p className="text-zinc-400 max-w-xl mx-auto text-lg">
                         {project.description}
                     </p>
                     <div className="flex justify-center gap-4 pt-4">
@@ -85,8 +92,8 @@ export function PluginThemeLora({ project }: PluginThemeLoraProps) {
                             <div className="inline-block px-3 py-1 rounded bg-red-500/10 text-red-400 text-xs border border-red-500/20 uppercase tracking-[0.2em]">
                                 工作流瓶颈 // WORKFLOW BOTTLENECK
                             </div>
-                            <h2 className="text-4xl font-bold text-emerald-50">我为什么要做这个工具</h2>
-                            <p className="text-emerald-200/60 leading-relaxed text-lg border-l-2 border-red-500/30 pl-6">
+                            <h2 className="text-4xl font-bold text-white">我为什么要做这个工具</h2>
+                            <p className="text-zinc-400 leading-relaxed text-lg border-l-2 border-red-500/30 pl-6">
                                 {ultimatePain}
                             </p>
                             <div className="grid gap-4">
@@ -148,8 +155,8 @@ export function PluginThemeLora({ project }: PluginThemeLoraProps) {
                             <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-emerald-900/20 border border-emerald-800/60 text-emerald-400 text-[11px] tracking-[0.2em] uppercase">
                                 遇到的问题
                             </div>
-                            <h2 className="text-3xl font-bold text-emerald-100">从痛点到行动的过程</h2>
-                            <p className="text-emerald-200/60 max-w-3xl mx-auto text-sm md:text-base">
+                            <h2 className="text-3xl font-bold text-white">从痛点到行动的过程</h2>
+                            <p className="text-zinc-400 max-w-3xl mx-auto text-sm md:text-base">
                                 真实碰到的坑和当时的应对，而不只是结果。
                             </p>
                         </div>
@@ -172,10 +179,10 @@ export function PluginThemeLora({ project }: PluginThemeLoraProps) {
                                             </div>
                                             <div className="flex-1">
                                                 <div className="text-[10px] text-emerald-600 uppercase tracking-[0.2em] mb-1">Pain → Solution</div>
-                                                <h3 className="text-lg font-bold text-emerald-50">{insight.title}</h3>
+                                                <h3 className="text-lg font-bold text-white">{insight.title}</h3>
                                             </div>
                                         </div>
-                                        <p className="text-emerald-200/80 leading-relaxed text-sm mb-4">{body}</p>
+                                        <p className="text-zinc-400 leading-relaxed text-sm mb-4">{body}</p>
                                         <div className="flex items-start gap-2 text-xs text-emerald-400/80 bg-emerald-900/10 p-3 rounded border border-emerald-900/20">
                                             <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" />
                                             <span>收获：{takeaway}</span>
@@ -215,8 +222,8 @@ export function PluginThemeLora({ project }: PluginThemeLoraProps) {
                                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-900/20 border border-emerald-800/60 text-emerald-400 text-xs tracking-widest uppercase">
                                             {item.tag}
                                         </div>
-                                        <h3 className="text-4xl font-bold text-emerald-100">{item.title}</h3>
-                                        <p className="text-emerald-200/60 max-w-2xl mx-auto text-lg">
+                                        <h3 className="text-4xl font-bold text-white">{item.title}</h3>
+                                        <p className="text-zinc-400 max-w-2xl mx-auto text-lg">
                                             {item.desc}
                                         </p>
                                     </div>
@@ -232,8 +239,13 @@ export function PluginThemeLora({ project }: PluginThemeLoraProps) {
                                                         <ImageIcon className="w-3 h-3" />
                                                         Training Set
                                                     </div>
-                                                    <div className="absolute inset-0 bg-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity z-10" />
-                                                    <img src={item.trainingImage} alt="Training Set" className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
+                                                    <div className="absolute inset-0 bg-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none" />
+                                                    <ImageLightbox
+                                                        src={withBasePath(item.trainingImage)}
+                                                        alt="Training Set"
+                                                        variant="emerald"
+                                                        className="w-full h-full"
+                                                    />
                                                 </div>
                                             )}
 
@@ -248,7 +260,7 @@ export function PluginThemeLora({ project }: PluginThemeLoraProps) {
                                                             <Layers className="w-4 h-4" />
                                                             训练思路 // Methodology
                                                         </div>
-                                                        <p className="text-emerald-200/80 leading-relaxed text-sm">
+                                                        <p className="text-zinc-400 leading-relaxed text-sm">
                                                             {item.trainingThoughts}
                                                         </p>
                                                     </div>
@@ -262,13 +274,18 @@ export function PluginThemeLora({ project }: PluginThemeLoraProps) {
                                             <div className="relative aspect-video bg-[#0f0f0f] rounded-xl border border-emerald-900/30 overflow-hidden group shadow-2xl shrink-0">
                                                 {item.comparisonImage ? (
                                                     <ComparisonSlider
-                                                        beforeImage={item.image || ""}
-                                                        afterImage={item.comparisonImage}
+                                                        beforeImage={withBasePath(item.image)}
+                                                        afterImage={withBasePath(item.comparisonImage)}
                                                         beforeLabel="BEFORE"
                                                         afterLabel="AFTER"
                                                     />
                                                 ) : (
-                                                    <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+                                                    <ImageLightbox
+                                                        src={withBasePath(item.image)}
+                                                        alt={item.title}
+                                                        variant="emerald"
+                                                        className="w-full h-full"
+                                                    />
                                                 )}
                                             </div>
 
@@ -279,7 +296,7 @@ export function PluginThemeLora({ project }: PluginThemeLoraProps) {
                                                         <div className="text-xs text-emerald-500/70 uppercase tracking-wider font-bold">Key Features</div>
                                                         <div className="grid gap-2">
                                                             {item.features.map((feature, fIdx) => (
-                                                                <div key={fIdx} className="flex items-start gap-2 text-sm text-emerald-200/70">
+                                                                <div key={fIdx} className="flex items-start gap-2 text-sm text-zinc-400">
                                                                     <Zap className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
                                                                     <span>{feature}</span>
                                                                 </div>
@@ -318,8 +335,8 @@ export function PluginThemeLora({ project }: PluginThemeLoraProps) {
                 <section className="relative z-10 py-32 px-6">
                     <div className="max-w-4xl mx-auto">
                         <div className="text-center mb-16">
-                            <h2 className="text-3xl font-bold text-emerald-100 mb-4">效果对比 // Impact Analysis</h2>
-                            <p className="text-emerald-500/60">Direct comparison of efficiency and output quality.</p>
+                            <h2 className="text-3xl font-bold text-white mb-4">效果对比 // Impact Analysis</h2>
+                            <p className="text-zinc-400">Direct comparison of efficiency and output quality.</p>
                         </div>
 
                         <div className="relative aspect-video bg-[#0f0f0f] rounded-xl border border-emerald-900/30 overflow-hidden group shadow-2xl">
@@ -341,15 +358,15 @@ export function PluginThemeLora({ project }: PluginThemeLoraProps) {
                         <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-emerald-900/20 border border-emerald-800/60 text-emerald-400 text-[11px] tracking-[0.2em] uppercase">
                             心得体会
                         </div>
-                        <h2 className="text-3xl font-bold text-emerald-100">做完之后的收获</h2>
+                        <h2 className="text-3xl font-bold text-white">做完之后的收获</h2>
                         <div className="grid md:grid-cols-2 gap-6 text-left">
                             {project.insights.map((insight, idx) => {
                                 const { takeaway } = splitInsight(insight.content)
                                 return (
                                     <div key={idx} className="p-6 rounded-lg bg-[#0f0f0f] border border-emerald-900/40 hover:border-emerald-500/30 transition-colors">
                                         <div className="text-xs text-emerald-500/70 mb-3 font-mono">收获 #{String(idx + 1).padStart(2, '0')}</div>
-                                        <h3 className="text-lg text-emerald-50 font-semibold mb-3">{insight.title}</h3>
-                                        <p className="text-emerald-200/80 text-sm leading-relaxed">{takeaway}</p>
+                                        <h3 className="text-lg text-white font-semibold mb-3">{insight.title}</h3>
+                                        <p className="text-zinc-400 text-sm leading-relaxed">{takeaway}</p>
                                     </div>
                                 )
                             })}

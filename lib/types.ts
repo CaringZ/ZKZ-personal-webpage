@@ -32,6 +32,7 @@ export interface Project {
 
     // Plugin Theme Specifics
     plugin?: {
+        colorTheme?: "orange" | "blue" | "purple" | "emerald" // New field for color theme
         painPoint: {
             title: string
             desc: string
@@ -56,6 +57,7 @@ export interface Project {
             command?: string
             image?: string // Placeholder for screenshot/demo (or "Before" image)
             comparisonImage?: string // If present, renders a Before/After slider for this item
+            codeSnippet?: string // New field for code snippets
             problem?: string // Specific problem this item solves
             solution?: string // How it solves it
             features?: string[] // Key features/steps
@@ -68,6 +70,7 @@ export interface Project {
     hobby?: {
         tagline?: string
         motivation?: string
+        colorTheme?: "orange" | "blue" | "purple" | "emerald" // New field for color theme
         features?: {
             title: string
             desc: string
@@ -79,10 +82,6 @@ export interface Project {
             solution: string
         }[]
         devLog: { status: "done" | "active" | "todo"; text: string }[]
-        codeSnippet: {
-            title: string
-            code: string
-        }
     }
 
     // Development Insights & Pain Points (Available for all project types)

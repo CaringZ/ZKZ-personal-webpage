@@ -2,8 +2,10 @@
 
 import { useRef, useState, useEffect } from "react"
 import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate } from "framer-motion"
-import { FileText, Cpu, Layers, Lightbulb, PenTool, Maximize2, ArrowDown, Quote, Code2, AlertTriangle } from "lucide-react"
+import { FileText, Cpu, Layers, Lightbulb, PenTool, ArrowDown, Quote, Code2, AlertTriangle } from "lucide-react"
+
 import type { Project } from "@/lib/projects-data"
+import { ImageLightbox } from "@/components/ui/image-lightbox"
 
 interface MatureProjectThemeProps {
     project: Project
@@ -27,9 +29,11 @@ export function MatureProjectTheme({ project }: MatureProjectThemeProps) {
     }
 
     const ultimatePain = project.mature?.motivation || project.description
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
+    const withBasePath = (path: string) => path?.startsWith('http') ? path : `${basePath}${path}`
     const assetBase = `/showcase/mature/${project.id}`
-    const blueprintSrc = `${assetBase}/blueprint.png`
-    const techDemoSrc = (idx: number) => `${assetBase}/tech-demo-${String(idx + 1).padStart(2, '0')}.png`
+    const blueprintSrc = withBasePath(`${assetBase}/blueprint.png`)
+    const techDemoSrc = (idx: number) => withBasePath(`${assetBase}/tech-demo-${String(idx + 1).padStart(2, '0')}.png`)
 
     const splitInsight = (text: string) => {
         const [body, takeaway] = text.split("收获:")
@@ -136,20 +140,14 @@ export function MatureProjectTheme({ project }: MatureProjectThemeProps) {
                                 <div className="absolute inset-0 bg-[linear-gradient(#ffffff03_1px,transparent_1px),linear-gradient(90deg,#ffffff03_1px,transparent_1px)] bg-[size:20px_20px]" />
 
                                 <div className="h-full w-full border border-white/5 bg-[#0a0a0a] relative overflow-hidden">
-                                    {/* Handwritten Notes Effect */}
-                                    <div className="absolute top-8 right-8 -rotate-6 text-yellow-100/40 font-handwriting text-sm max-w-[150px] hidden md:block z-20 pointer-events-none mix-blend-plus-lighter">
-                                        {project.mature?.architecture.diagramNote}
-                                        <svg className="absolute top-full left-0 w-12 h-12 text-yellow-100/20" viewBox="0 0 100 100">
-                                            <path d="M10,10 Q50,50 20,80" fill="none" stroke="currentColor" strokeWidth="1.5" />
-                                        </svg>
-                                    </div>
+                                    {/* Handwritten Notes Effect - REMOVED */}
 
                                     <div className="absolute inset-0 flex items-center justify-center">
-                                        <img
+                                        <ImageLightbox
                                             src={blueprintSrc}
                                             alt="System architecture blueprint"
+                                            variant="blue"
                                             className="max-w-full max-h-full object-contain drop-shadow-[0_10px_30px_rgba(255,255,255,0.12)]"
-                                            loading="lazy"
                                         />
                                     </div>
                                 </div>
@@ -267,17 +265,13 @@ export function MatureProjectTheme({ project }: MatureProjectThemeProps) {
                         <div key={idx} className="group relative">
                             <div className={`grid md:grid-cols-2 gap-16 items-center ${idx % 2 === 0 ? '' : 'md:flex-row-reverse'}`}>
                                 <div className={`${idx % 2 === 0 ? 'md:text-right md:order-1' : 'md:order-2'} space-y-8`}>
-                                    <div className={`inline-flex p-3 rounded-xl bg-white/5 text-white/80 ${idx % 2 === 0 ? 'md:ml-auto' : ''}`}>
-                                        <Maximize2 className="w-5 h-5" />
-                                    </div>
-
                                     <div className="space-y-4">
                                         <h3 className="text-3xl font-bold text-white">{item.title}</h3>
-                                    <div className="space-y-4 text-slate-400">
-                                        <div>
-                                            <strong className="text-white/30 text-[10px] uppercase tracking-widest block mb-2">{item.subtitle}</strong>
-                                            <p className="leading-relaxed">{item.desc}</p>
-                                        </div>
+                                        <div className="space-y-4 text-slate-400">
+                                            <div>
+                                                <strong className="text-white/30 text-[10px] uppercase tracking-widest block mb-2">{item.subtitle}</strong>
+                                                <p className="leading-relaxed">{item.desc}</p>
+                                            </div>
                                             <div className={`flex gap-2 flex-wrap ${idx % 2 === 0 ? 'md:justify-end' : ''}`}>
                                                 {item.stats.map((stat, sIdx) => (
                                                     <span key={sIdx} className="text-[10px] border border-white/10 px-2 py-1 rounded text-white/40 font-mono">{stat}</span>
@@ -289,14 +283,14 @@ export function MatureProjectTheme({ project }: MatureProjectThemeProps) {
 
                                 <div className={`${idx % 2 === 0 ? 'md:order-2' : 'md:order-1'} relative`}>
                                     <div className="aspect-video bg-[#050505] rounded-lg border border-white/10 overflow-hidden relative group-hover:border-white/20 transition-colors shadow-2xl">
-                                        <img
+                                        <ImageLightbox
                                             src={techDemoSrc(idx)}
                                             alt={`${item.title} visual`}
-                                            className="absolute inset-0 w-full h-full object-cover"
-                                            loading="lazy"
+                                            variant="blue"
+                                            className="absolute inset-0 w-full h-full"
                                         />
                                         {/* Holographic Overlay Effect */}
-                                        <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                        <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
                                     </div>
                                 </div>
                             </div>

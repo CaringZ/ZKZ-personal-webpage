@@ -52,9 +52,21 @@ const iconMap: Record<string, any> = {
 export function HobbyProjectTheme({ project }: HobbyProjectThemeProps) {
     const [activeTab, setActiveTab] = useState<"preview" | "terminal">("preview")
     const ultimatePain = project.description
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
+    const withBasePath = (path: string) => path?.startsWith('http') ? path : `${basePath}${path}`
     const assetBase = `/showcase/hobby/${project.id}`
-    const screenRecording = `${assetBase}/screen-recording.mp4`
-    const screenPoster = `${assetBase}/screen-recording.png`
+    const screenRecording = withBasePath(`${assetBase}/screen-recording.mp4`)
+    const screenPoster = withBasePath(`${assetBase}/screen-recording.png`)
+    const theme = (() => {
+        switch (project.hobby?.colorTheme) {
+            case "orange": return { primary: "#f97316", secondary: "#fb923c", border: "rgba(249, 115, 22, 0.3)" }
+            case "purple": return { primary: "#a855f7", secondary: "#c084fc", border: "rgba(168, 85, 247, 0.3)" }
+            case "emerald": return { primary: "#10b981", secondary: "#34d399", border: "rgba(16, 185, 129, 0.3)" }
+            case "blue":
+            default: return { primary: "#4fc1ff", secondary: "#60a5fa", border: "rgba(79, 193, 255, 0.3)" }
+        }
+    })()
+
     const splitInsight = (text: string) => {
         const [body, takeaway] = text.split("收获:")
         return {
@@ -129,7 +141,7 @@ export function HobbyProjectTheme({ project }: HobbyProjectThemeProps) {
                             <span className="block"> * <span className="text-[#569cd6]">@status</span> {project.status}</span>
                             <span className="block"> */</span>
                         </div>
-                        <h1 className="text-4xl md:text-6xl font-bold text-[#4fc1ff] tracking-tight flex flex-wrap items-center gap-3">
+                        <h1 className="text-4xl md:text-6xl font-bold tracking-tight flex flex-wrap items-center gap-3" style={{ color: theme.primary }}>
                             <span className="text-[#c586c0] text-2xl md:text-4xl">const</span>
                             <span className="text-[#dcdcaa]">{project.title.replace(/\s+/g, '')}</span>
                             <span className="text-[#d4d4d4] text-2xl md:text-4xl">=</span>
@@ -142,15 +154,22 @@ export function HobbyProjectTheme({ project }: HobbyProjectThemeProps) {
                     {project.hobby?.motivation && (
                         <section className="mb-20">
                             <div className="flex items-center gap-3 mb-6 border-b border-[#333] pb-2">
-                                <FileCode className="w-5 h-5 text-[#ce9178]" />
+                                <FileCode className="w-5 h-5" style={{ color: theme.primary }} />
                                 <h2 className="text-lg font-bold text-[#d4d4d4] uppercase tracking-wider">README.md // 开发动机</h2>
                             </div>
-                            <div className="bg-[#1e1e1e] rounded-lg border border-[#333] p-8 relative overflow-hidden group hover:border-[#ce9178]/30 transition-colors">
+                            <div
+                                className="bg-[#1e1e1e] rounded-lg border border-[#333] p-8 relative overflow-hidden group transition-colors"
+                                style={{ borderColor: '#333' }}
+                            >
+                                <div
+                                    className="absolute inset-0 border pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity rounded-lg"
+                                    style={{ borderColor: theme.border }}
+                                />
                                 <div className="absolute top-0 right-0 p-8 opacity-5 pointer-events-none">
                                     <Lightbulb className="w-40 h-40 text-white" />
                                 </div>
                                 <div className="relative z-10 font-mono text-sm leading-relaxed text-[#d4d4d4]">
-                                    <span className="text-[#569cd6] font-bold"># Why I made this</span>
+                                    <span className="font-bold" style={{ color: theme.primary }}># Why I made this</span>
                                     <br /><br />
                                     {project.hobby.motivation}
                                 </div>
@@ -164,16 +183,23 @@ export function HobbyProjectTheme({ project }: HobbyProjectThemeProps) {
                     {project.hobby?.features && (
                         <section className="mb-20">
                             <div className="flex items-center gap-3 mb-6 border-b border-[#333] pb-2">
-                                <Settings className="w-5 h-5 text-[#4ec9b0]" />
+                                <Settings className="w-5 h-5" style={{ color: theme.primary }} />
                                 <h2 className="text-lg font-bold text-[#d4d4d4] uppercase tracking-wider">Module Config // 功能亮点</h2>
                             </div>
                             <div className="grid md:grid-cols-2 gap-6">
                                 {project.hobby.features.map((feature, idx) => {
                                     const Icon = iconMap[feature.icon] || Box
                                     return (
-                                        <div key={idx} className="bg-[#1e1e1e] rounded-lg border border-[#333] overflow-hidden hover:border-[#4ec9b0]/30 transition-colors group">
+                                        <div
+                                            key={idx}
+                                            className="bg-[#1e1e1e] rounded-lg border border-[#333] overflow-hidden transition-colors group relative"
+                                        >
+                                            <div
+                                                className="absolute inset-0 border pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity rounded-lg z-20"
+                                                style={{ borderColor: theme.border }}
+                                            />
                                             <div className="flex items-center gap-2 px-4 py-2 bg-[#252526] border-b border-[#333]">
-                                                <Icon className="w-4 h-4 text-[#4ec9b0]" />
+                                                <Icon className="w-4 h-4" style={{ color: theme.primary }} />
                                                 <span className="text-[#d4d4d4] text-xs font-mono">{feature.title}</span>
                                             </div>
                                             <div className="p-6 font-mono text-sm text-[#d4d4d4] leading-relaxed">
@@ -190,12 +216,19 @@ export function HobbyProjectTheme({ project }: HobbyProjectThemeProps) {
                     {project.hobby?.useCases && (
                         <section className="mb-20">
                             <div className="flex items-center gap-3 mb-6 border-b border-[#333] pb-2">
-                                <Terminal className="w-5 h-5 text-[#dcdcaa]" />
+                                <Terminal className="w-5 h-5" style={{ color: theme.primary }} />
                                 <h2 className="text-lg font-bold text-[#d4d4d4] uppercase tracking-wider">Test Scenarios // 使用场景</h2>
                             </div>
                             <div className="space-y-4">
                                 {project.hobby.useCases.map((useCase, idx) => (
-                                    <div key={idx} className="bg-[#1e1e1e] rounded-lg border border-[#333] p-6 font-mono text-sm hover:border-[#dcdcaa]/30 transition-colors">
+                                    <div
+                                        key={idx}
+                                        className="bg-[#1e1e1e] rounded-lg border border-[#333] p-6 font-mono text-sm transition-colors relative"
+                                    >
+                                        <div
+                                            className="absolute inset-0 border pointer-events-none opacity-0 hover:opacity-100 transition-opacity rounded-lg"
+                                            style={{ borderColor: theme.border }}
+                                        />
                                         <div className="text-[#c586c0]">describe<span className="text-[#d4d4d4]">(</span><span className="text-[#ce9178]">&quot;{useCase.title}&quot;</span><span className="text-[#d4d4d4]">, () </span><span className="text-[#c586c0]">{`=>`}</span><span className="text-[#d4d4d4]"> {`{`}</span></div>
                                         <div className="pl-8 mt-2 space-y-2 border-l border-[#333] ml-2">
                                             <div>
@@ -216,7 +249,10 @@ export function HobbyProjectTheme({ project }: HobbyProjectThemeProps) {
                     )}
 
                     {/* Tech Stack "Imports" */}
-                    <div className="mb-20 space-y-3 pl-6 border-l border-[#333] hover:border-[#4fc1ff]/50 transition-colors">
+                    <div
+                        className="mb-20 space-y-3 pl-6 border-l border-[#333] transition-colors hover:border-opacity-50"
+                        style={{ borderColor: '#333' }}
+                    >
                         {project.technologies.map((tech, i) => (
                             <motion.div
                                 key={tech}
@@ -234,7 +270,7 @@ export function HobbyProjectTheme({ project }: HobbyProjectThemeProps) {
                     <section className="mb-24">
                         <div className="flex items-center justify-between mb-4">
                             <div className="flex items-center gap-2">
-                                <Play className="w-4 h-4 text-[#4fc1ff]" />
+                                <Play className="w-4 h-4" style={{ color: theme.primary }} />
                                 <span className="text-[#d4d4d4] font-bold text-sm tracking-wider">RUN_DEBUG</span>
                             </div>
                             <div className="flex bg-[#252526] rounded-md p-0.5 border border-[#333]">
@@ -254,9 +290,9 @@ export function HobbyProjectTheme({ project }: HobbyProjectThemeProps) {
                         </div>
 
                         <div className="relative aspect-video bg-[#1e1e1e] rounded-lg border border-[#333] shadow-2xl overflow-hidden group ring-1 ring-black/50">
-                            {/* Browser Toolbar */}
-                            <div className="absolute top-0 left-0 right-0 h-9 bg-[#252526] flex items-center px-4 gap-3 border-b border-[#1e1e1e] z-10">
-                                <div className="flex gap-1.5 opacity-60 hover:opacity-100 transition-opacity">
+                            {/* Browser Toolbar (overlay, no layout shift) */}
+                            <div className="absolute top-0 left-0 right-0 h-9 bg-[#252526]/90 flex items-center px-4 gap-3 border-b border-[#1e1e1e] z-20 pointer-events-none">
+                                <div className="flex gap-1.5 opacity-70">
                                     <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]" />
                                     <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]" />
                                     <div className="w-2.5 h-2.5 rounded-full bg-[#27c93f]" />
@@ -270,20 +306,16 @@ export function HobbyProjectTheme({ project }: HobbyProjectThemeProps) {
                             </div>
 
                             {/* Content */}
-                            <div className="absolute inset-0 top-9 bg-[#1e1e1e]">
+                            <div className="absolute inset-0 bg-[#0f0f0f]">
                                 {activeTab === "preview" ? (
-                                    <div className="w-full h-full flex items-center justify-center relative bg-[#0f0f0f]">
+                                    <div className="w-full h-full flex items-center justify-center relative">
                                         <video
-                                            src={screenRecording}
-                                            poster={screenPoster}
+                                            src={screenRecording + "#t=0.001"}
                                             controls
-                                            className="w-full h-full object-contain"
+                                            className="w-full h-full object-cover"
                                             playsInline
                                             preload="metadata"
                                         />
-                                        <div className="absolute bottom-3 right-3 text-[10px] text-[#4fc1ff] border border-[#4fc1ff]/30 px-3 py-1 rounded-full bg-[#4fc1ff]/10 font-mono">
-                                            {screenRecording}
-                                        </div>
                                     </div>
                                 ) : (
                                     <div className="w-full h-full p-6 font-mono text-xs text-[#d4d4d4] overflow-y-auto bg-[#1e1e1e]">
@@ -326,8 +358,12 @@ export function HobbyProjectTheme({ project }: HobbyProjectThemeProps) {
                                             whileInView={{ opacity: 1, x: 0 }}
                                             transition={{ duration: 0.6, delay: idx * 0.1 }}
                                             viewport={{ once: true }}
-                                            className="bg-[#1e1e1e] rounded-lg border border-[#333] overflow-hidden hover:border-[#4fc1ff]/30 transition-colors group"
+                                            className="bg-[#1e1e1e] rounded-lg border border-[#333] overflow-hidden transition-colors group relative"
                                         >
+                                            <div
+                                                className="absolute inset-0 border pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity rounded-lg z-20"
+                                                style={{ borderColor: theme.border }}
+                                            />
                                             <div className="flex items-center gap-2 px-4 py-2 bg-[#252526] border-b border-[#333]">
                                                 <span className="text-[#c586c0] text-xs">function</span>
                                                 <span className="text-[#dcdcaa] text-xs">solveIssue_{String(idx + 1).padStart(2, '0')}</span>
@@ -377,7 +413,10 @@ export function HobbyProjectTheme({ project }: HobbyProjectThemeProps) {
                                         <CheckCircle2 className="w-5 h-5 text-[#6a9955]" />
                                     ) : item.status === "active" ? (
                                         <div className="w-5 h-5 flex items-center justify-center">
-                                            <div className="w-3 h-3 rounded-full border-2 border-[#4fc1ff] border-t-transparent animate-spin" />
+                                            <div
+                                                className="w-3 h-3 rounded-full border-2 border-t-transparent animate-spin"
+                                                style={{ borderColor: theme.primary, borderTopColor: 'transparent' }}
+                                            />
                                         </div>
                                     ) : (
                                         <Circle className="w-5 h-5 text-[#444]" />

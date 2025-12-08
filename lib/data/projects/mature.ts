@@ -5,7 +5,7 @@ export const matureProjects: Project[] = [
     id: "project-1",
     title: "Comfy Flow",
     description:
-      "基于 Express + WebSocket 的 ComfyUI 多用户队列管理平台。通过统一配置驱动封装 9 种预配置工作流，将复杂的节点连线操作简化为一键式 Web 交互。实现了任务队列调度、实时进度监控及批量文件自动化处理，解决了团队共享 GPU 资源时的协作痛点。",
+      "一个基于 Web 的 ComfyUI 任务队列管理工具。支持多用户排队、任务进度监控和批量文件处理，解决了团队多人共用一台 GPU 服务器时的冲突问题。",
     type: "mature",
     technologies: ["Express", "WebSocket", "ComfyUI API", "JavaScript", "Python", "Sharp"],
     year: "2025",
@@ -13,12 +13,12 @@ export const matureProjects: Project[] = [
     link: "#",
     github: "#",
     mature: {
-      tagline: "ComfyUI 工作流工程化实践：从“节点连线”到“一键生产”的降维打击",
-      motivation: "作为一名从美术老师转型的开发者，我深知传统美术人员面对复杂的 ComfyUI 节点连线时的无力感。我开发这个项目的初衷，就是为了搭建一座桥梁：将底层复杂的 Python 逻辑和节点图，封装为美术人员最熟悉的“图形化界面”。这不仅是一个工具，更是我“技术服务于艺术”理念的工程化实践，旨在让不懂代码的美术同事也能享受到 AI 带来的生产力革命。",
+      tagline: "让不懂节点的美术也能用 ComfyUI",
+      motivation: "团队里的美术同事想用 AI 出图，但 ComfyUI 复杂的节点逻辑学习门槛太高。而且大家共用一台显卡，经常出现资源抢占。我就做了这个网页版工具，把复杂的节点封装成简单的表单，大家排队使用，既简单又有序。",
       heroStats: [
-        { label: "生产级模版", value: "9+", icon: "Layers" },
+        { label: "预设模版", value: "9+", icon: "Layers" },
         { label: "学习成本", value: "0", icon: "Activity" },
-        { label: "任务必达", value: "100%", icon: "Shield" }
+        { label: "任务成功率", value: "100%", icon: "Shield" }
       ],
       architecture: {
         diagramNote: "基于 Web 的队列管理器：Express + WebSocket + ComfyUI API。支持 JSON 持久化的多用户任务调度。",
@@ -32,56 +32,56 @@ export const matureProjects: Project[] = [
       },
       features: [
         {
-          title: "智能队列调度 (Smart Queue)",
+          title: "排队系统",
           subtitle: "痛点：资源抢占与冲突",
-          desc: "针对多用户共享单 GPU 的场景，设计了基于 WebSocket 的实时任务队列。实现了任务的自动排队、失败重试、断线重连及进度实时推送，彻底解决了多人并发时的资源冲突与任务丢失问题。",
+          desc: "就像去银行办业务一样，大家提交的任务会自动排队，一个接一个跑，不会因为同时提交而报错。",
           stats: ["实时进度", "自动重试"],
           icon: "Layers"
         },
         {
-          title: "低代码工作流封装 (Low-Code Encapsulation)",
-          subtitle: "痛点：使用门槛过高",
-          desc: "通过深度解析 ComfyUI API，将文生图、图生图、Inpainting 等 9 种复杂工作流封装为统一的 JSON 配置。前端根据配置动态生成表单，让美术人员无需理解底层节点逻辑，仅需调整核心参数即可产出高质量资产。",
+          title: "简单界面",
+          subtitle: "痛点：节点逻辑复杂",
+          desc: "把复杂的节点参数变成了简单的填空题。美术只需要上传图片、选个风格，点生成就行，不用管节点怎么连。",
           stats: ["配置驱动", "动态表单"],
           icon: "Cpu"
         },
         {
-          title: "批量资产管线 (Mass Production Pipeline)",
-          subtitle: "痛点：重复性手工劳动",
-          desc: "构建了全自动化的批量处理管线。支持文件夹拖拽上传，后端自动进行切片分发、任务调度、结果回收及按规则重命名归档。将原本需要人工重复操作数千次的流程，压缩为一次“拖拽+点击”。",
+          title: "批量处理",
+          subtitle: "痛点：重复性机械劳动",
+          desc: "支持直接把一个文件夹的图拖进去，系统会自动一张张处理完，并按规则保存好。",
           stats: ["自动切片", "规则归档"],
           icon: "Globe"
         }
       ],
       impact: [
-        { label: "工程化", value: "单人维护", desc: "一人构建全套自动化管线" },
-        { label: "易用性", value: "开箱即用", desc: "新人无需培训即可上手" },
-        { label: "稳定性", value: "队列持久化", desc: "服务重启不丢失任务" }
+        { label: "效率", value: "单人维护", desc: "一个人就能维护全套流程" },
+        { label: "易用", value: "开箱即用", desc: "新人不用培训直接上手" },
+        { label: "稳定", value: "队列保存", desc: "重启也不会丢任务" }
       ]
     },
     insights: [
       {
-        title: "痛点: 轮询压垮服务器 / 进度不准",
-        content: "起因: 初期使用 HTTP 轮询获取进度，导致服务器负载过高且延迟明显。思路: 重构为 WebSocket 长连接，配合心跳检测与消息缓存机制。结果: 实现了毫秒级的进度同步与断线重连，用户体验大幅提升。收获: 实时交互场景下，WebSocket 是比轮询更优雅的解。"
+        title: "痛点: 进度条不准",
+        content: "起因: 一开始用轮询，服务器压力大而且进度卡顿。思路: 改用了 WebSocket 长连接。结果: 进度条丝滑流畅，体验好多了。"
       },
       {
-        title: "痛点: 单实例 ComfyUI 资源抢占",
-        content: "起因: 多个请求同时发给 ComfyUI 会导致显存溢出或任务混乱。思路: 在 Node.js 层实现一个 FIFO (先进先出) 内存队列，严格控制并发，并增加用户配额管理。结果: 确保了 GPU 资源的有序利用，杜绝了任务冲突。收获: 中间件层的流量整形是保护后端服务的关键。"
+        title: "痛点: 队列被“麦霸”占满",
+        content: "起因: 解决了并发问题后，发现有个同事一次性提交了500张图，导致其他人一下午都排不上队。思路: 引入了“公平调度算法”和单人配额限制。结果: 解决了资源垄断，但又得处理“多账号薅羊毛”的新问题。"
       },
       {
-        title: "痛点: 工作流 JSON 维护困难",
-        content: "起因: 随着 ComfyUI 节点更新，硬编码的 JSON 经常失效。思路: 建立“配置驱动”架构，将易变参数提取为配置文件，底层 JSON 作为模版动态注入。结果: 工作流更新只需修改配置，无需动代码。收获: 动静分离是降低维护成本的黄金法则。"
+        title: "痛点: 消失的任务",
+        content: "起因: 对上一个任务进行取消，创建新任务，前端会自动返回旧任务时的状态，将新任务隐藏了，后台还在运行，直到这条任务全部跑完才出现在前端。思路: 捋顺各种状态下任务列表更新、保存的规则。"
       },
       {
-        title: "痛点: 批量任务前端渲染卡顿",
-        content: "起因: 任务列表超过 1000 条时，DOM 节点过多导致页面假死。思路: 引入虚拟滚动 (Virtual Scrolling) 技术，仅渲染可视区域内的 DOM 节点。结果: 即使万级任务列表也能流畅滑动。收获: 性能优化往往在于“不做什么”，而不是“多做什么”。"
+        title: "痛点: 列表太长页面卡",
+        content: "起因: 任务多了页面就卡死。思路: 用了虚拟滚动，只渲染看得到的部分。结果: 几千条任务也不卡了。"
       }
     ]
   },
   {
     id: "project-2",
     title: "Flow Master",
-    description: "基于 PyQt5 与 Playwright 构建的桌面端可视化自动化编排平台。它将复杂的浏览器自动化脚本开发降维为图形化拖拽操作，内置智能选择器构建器与 Excel 数据驱动引擎，让非技术人员也能轻松构建高鲁棒性的自动化工作流。",
+    description: "基于 PyQt5 和 Playwright 的桌面端自动化工具。通过可视化的表格界面编排网页操作，让不懂代码的人也能制作自动化脚本。",
     type: "mature",
     technologies: ["Python", "PyQt5", "Playwright", "Pandas", "PyInstaller"],
     year: "2025",
@@ -90,11 +90,11 @@ export const matureProjects: Project[] = [
     github: "#",
     mature: {
       tagline: "打破代码壁垒：让 Playwright 自动化脚本触手可及",
-      motivation: "在协助运营团队处理重复性网页操作时，我尝试过市面上的主流工具，但都不尽如人意：**影刀**虽然功能强大，但配置繁琐、流程过于复杂，对非技术人员极不友好；**Automa** 在处理长流程时界面难以管理，且存在严重的稳定性问题。为了解决这些痛点，我开发了 Flow Master，旨在打造一个既有 Playwright 的强大稳定性，又具备简洁可视化交互的“中间层”，让不懂代码的同事也能轻松构建高鲁棒性的自动化工作流。",
+      motivation: "在协助运营团队处理重复性网页操作时，我深入调研了市面上的主流工具：**影刀**虽然功能强大，但配置繁琐、学习门槛过高；**Automa** 虽易上手，但在处理长流程时稳定性不足。为了解决这些痛点，我开发了 Flow Master。它结合了 Playwright 的工业级稳定性与简洁的可视化交互，让不懂代码的同事也能轻松构建出高稳定性的自动化工作流。",
       heroStats: [
         { label: "脚本库", value: "50+", icon: "FileText" },
-        { label: "运行稳定性", value: "99.9%", icon: "Shield" },
-        { label: "执行准确率", value: "100%", icon: "Target" }
+        { label: "运行稳定", value: "99.9%", icon: "Shield" },
+        { label: "执行准确", value: "100%", icon: "Target" }
       ],
       architecture: {
         diagramNote: "Hybrid Architecture: PyQt5 Sync UI + Playwright Async Engine. Portable runtime environment.",
@@ -106,46 +106,48 @@ export const matureProjects: Project[] = [
         ]
       },
       features: [
+
         {
-          title: "可视化任务编排 (Visual Orchestration)",
-          subtitle: "痛点：代码编写门槛高",
-          desc: "设计了基于表格的动作编排系统，支持点击、输入、悬停、等待等 10+ 种核心操作。用户无需编写一行代码，通过简单的增删改查即可构建复杂的业务逻辑，且支持动作的拖拽排序与实时预览。",
+          title: "可视化编排",
+          subtitle: "痛点：代码编写门槛",
+          desc: "用表格来管理操作步骤，支持点击、输入、等待等常用操作。不用写代码，拖拖拽拽就能把流程配好。",
           stats: ["零代码", "拖拽编排"],
           icon: "Layers"
         },
         {
-          title: "智能选择器构建 (Smart Selector Builder)",
-          subtitle: "痛点：元素定位脆弱",
-          desc: "针对动态网页元素难以定位的难题，开发了高级选择器构建器。支持“链式定位”（父子级关系）、“相对定位”（Near/Left-of）及“索引定位”，自动生成高鲁棒性的 Playwright 选择器，彻底告别脆弱的 XPath。",
+          title: "智能定位",
+          subtitle: "痛点：DOM 结构不稳定",
+          desc: "做了一个辅助工具，能自动生成稳定的元素定位符，就算网页微调了，脚本也能照样跑。",
           stats: ["语义化定位", "抗变动"],
           icon: "Cpu"
         },
         {
-          title: "Excel 数据驱动 (Data-Driven Execution)",
-          subtitle: "痛点：批量处理繁琐",
-          desc: "深度集成了 Pandas 数据处理引擎。用户只需导入 Excel 表格，即可将列数据映射为输入变量。脚本运行时会自动遍历表格行，实现“一次配置，批量执行”，完美适配电商上架、表单填报等场景。",
+          title: "Excel 批量处理",
+          subtitle: "痛点：海量数据处理",
+          desc: "支持导入 Excel 表格，脚本会自动读取每一行数据去执行操作，适合批量填表、上架商品。",
           stats: ["变量映射", "批量循环"],
           icon: "Zap"
         }
       ],
       impact: [
-        { label: "工程化", value: "便携部署", desc: "内嵌 Python 环境，解压即用" },
-        { label: "易用性", value: "所见即所得", desc: "内置选择器生成工具" },
-        { label: "扩展性", value: "脚本兼容", desc: "支持导出标准 Python 代码" }
+        { label: "便携", value: "解压即用", desc: "不用安装环境，拷过去就能用" },
+        { label: "易用", value: "所见即所得", desc: "内置了定位辅助工具" },
+        { label: "扩展", value: "脚本兼容", desc: "支持导出 Python 代码" }
       ]
     },
     insights: [
+
       {
-        title: "痛点: PyQt5 同步主线程 vs Playwright 异步逻辑",
-        content: "起因: Playwright 的 async/await 机制与 PyQt5 的事件循环冲突，直接运行会导致界面假死。思路: 采用多线程架构，将 Playwright 逻辑封装在 QThread Worker 中，通过 PyQt Signal/Slot 机制实现跨线程通信与状态同步。结果: 实现了流畅的 UI 响应与稳定的后台执行。"
+        title: "痛点: 界面假死",
+        content: "起因: 自动化脚本跑起来的时候，界面就卡住了。思路: 把脚本放到后台线程去跑。结果: 脚本跑脚本的，界面还能动。"
       },
       {
-        title: "痛点: 打包后 Playwright 无法启动浏览器",
-        content: "起因: 开发环境一切正常，但打包后在其他电脑无法启动，Playwright 坚持去默认路径(C盘)找浏览器，且缺少 Node 依赖。思路: 逆向分析 Playwright 启动流程，发现冻结环境下需手动指定 `PLAYWRIGHT_BROWSERS_PATH` 环境变量，并直接调用内部 `node.exe` + `cli.js` 启动内核，而非依赖系统 Python。结果: 彻底解决了“换台电脑就挂”的部署难题，实现了真正的便携式启动。"
+        title: "痛点: 换电脑就不能用",
+        content: "起因: 别人的电脑没装环境，脚本跑不起来。思路: 把浏览器和环境都打包到软件里。结果: 拷到哪都能直接用。"
       },
       {
-        title: "痛点: 动态 ID 导致自动化脚本频繁失效",
-        content: "起因: 现代前端框架（如 React/Vue）生成的随机 Class/ID 导致传统选择器失效。思路: 引入 Playwright 的语义化定位（Locate by Role/Text）及相对定位策略，并开发图形化构建器辅助生成。结果: 脚本对 UI 变动的容忍度大幅提升，维护成本降低 80%。"
+        title: "痛点: 薛定谔的元素 (Heisenbug)",
+        content: "起因: 定位时明明能找到元素，一运行脚本就找不到，非常玄学。思路: 开发了“高级选择器构建器”生成多种定位方式，并加上了“自动重试+人工介入”机制（失败自动重试上一步，不行再弹窗让用户选）。结果: 虽然不能100%自动，但至少不会莫名其妙挂在半路了。"
       }
     ]
   },
