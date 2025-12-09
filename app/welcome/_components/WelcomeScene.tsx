@@ -176,7 +176,7 @@ export function WelcomeFooter() {
                                 />
                             </div>
                             <a
-                                href="https://github.com/CaringZ"
+                                href="https://github.com/CAC-Z"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="group cursor-pointer"
