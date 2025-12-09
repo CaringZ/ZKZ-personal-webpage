@@ -5,8 +5,7 @@ import { ToasterConfig } from "./_components/ToasterConfig"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "我的作品集 - Portfolio Showcase",
-  description: "探索我的商业案例、项目开发与美术创作",
+  title: "CAC-Z-PW",
 }
 
 export default function RootLayout({
