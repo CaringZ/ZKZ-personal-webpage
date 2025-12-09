@@ -4,33 +4,17 @@ export const pluginProjects: Project[] = [
   {
     id: "plugin-1",
     title: "Comfy Controller",
-    description: "一个 Web 版的 ComfyUI 控制器。把复杂的节点工作流封装成简单的网页界面，支持批量上传图片和文档，让不懂节点的人也能用。",
+    description: "基于 Web 架构的 ComfyUI 远程控制系统。通过中间件技术将复杂的节点流封装为可视化操作面板，支持资源批量调度与处理，专为非技术团队设计的图形化交互方案。",
     type: "plugin",
     technologies: ["Python", "JavaScript", "ComfyUI API", "WebSocket"],
     year: "2024",
     status: "completed",
-    github: "#",
     plugin: {
       colorTheme: "purple",
       hasGlobalComparison: false,
-      gallery: [
-        "/showcase/plugins/plugin-1/gallery-01.png",
-        "/showcase/plugins/plugin-1/gallery-02.png",
-        "/showcase/plugins/plugin-1/gallery-03.png",
-        "/showcase/plugins/plugin-1/gallery-04.png"
-      ],
       painPoint: {
-        title: "工作流复用性差",
-        desc: "我自己搭的工作流很好用，但全是节点连线，发给同事他们根本不会用。我想把它做成一个简单的网页，别人只需要上传图片、点个按钮就行了。",
+        desc: "原生 ComfyUI 的节点式交互对创意类（如美术）人员存在极高的认知壁垒，导致优秀的自动化流程难以在团队内推广。我旨在开发一个去技术化的“黑盒”界面，将底层逻辑隐藏，仅暴露业务所需的输入与控制接口。",
         stats: ["操作繁琐", "难以分享"]
-      },
-      pipeline: {
-        input: "批量文档 / 图像素材",
-        process: "Web 前端调度 -> ComfyUI API 执行 -> 实时状态反馈",
-        output: "分类归档的生成结果 & 结构化记录"
-      },
-      installation: {
-        npm: "git clone comfy-controller"
       },
       items: [
         {
@@ -39,7 +23,7 @@ export const pluginProjects: Project[] = [
           tag: "Core",
           image: "/showcase/plugins/plugin-1/items/controller-img2img.png",
           problem: "手动在 ComfyUI 中调整图生图参数繁琐且难以批量处理。",
-          solution: "Web 界面封装图生图工作流，提供直观的参数控制和批量处理能力。",
+          solution: "构建参数映射层，实现工作流参数的可视化配置；引入队列机制，支持从单图裂变到批量生成的自动化作业。",
           features: ["图像裂变", "参数可视化", "批量生成"]
         },
         {
@@ -57,7 +41,7 @@ export const pluginProjects: Project[] = [
           tag: "Batch",
           image: "/showcase/plugins/plugin-1/items/controller-text-proc.png",
           problem: "生成的大量标题需要做内容检查、细节调整，传统文本编辑无法批量进行。",
-          solution: "支持批量txt文本导入，批量直观可视化进行，确认内容后安全批量保存。",
+          solution: "提供基于 Web 的文本批处理管线，集成“导入-清洗-预览-归档”全流程，确保大批量文本数据在进入生成环节前的规范性与安全性。",
           features: ["批量文本导入", "格式化处理", "自动队列"]
         },
         {
@@ -65,8 +49,8 @@ export const pluginProjects: Project[] = [
           desc: "批量加载图像并自动执行工作流，支持结果实时预览和分类管理。",
           tag: "Batch",
           image: "/showcase/plugins/plugin-1/items/controller-batch-img.png",
-          problem: "处理大量图像时需要反复手动操作，效率低下，默认的图像查看器对透明背景的纯黑/纯白图像查看效果很差。",
-          solution: "自动化批量图像处理流程，实时预览和结构化管理生成结果。对于透明背景图像可替换不同的容器背景方便查看细节效果。可对图像进行分组保存。",
+          problem: "处理大量图像时需要反复手动操作，效率低下，原生查看器缺乏对 Alpha 通道的透明度网格支持，导致在处理透明背景素材时难以辨识细节。",
+          solution: "自动化批量图像处理流程，实时预览和结构化管理生成结果。内置专业级图像预览引擎，支持动态切换棋盘格/纯色背景，准确还原透明通道细节。可对图像进行分组保存。",
           features: ["批量图像加载", "实时预览", "分类归档"]
         }
       ]
@@ -74,42 +58,33 @@ export const pluginProjects: Project[] = [
     insights: [
       {
         title: "挑战: 文本显示不出来",
-        content: "起因: 后端生成了文字，但前端有时候读不到。思路: 改成了轮询机制，每隔几秒去问一下后端有没有新内容。结果: 文字能正常显示了。"
+        content: "起因: 后端生成了文字，但前端有时候读不到。思路: 改成了轮询机制，每隔几秒去问一下后端有没有新内容。结果: 文字能正常显示了。收获: 在高可靠性要求场景下，技术的选择应服务于结果的确定性，而非单纯追求架构的先进性。。"
       },
       {
-        title: "痛点: 状态同步的噩梦",
-        content: "起因: 为了交互快，把状态放在前端管理。结果后端跑完任务，前端状态没更新，用户以为卡死了。思路: 被迫重写了状态管理，以前端为主改为以 WebSocket 推送的后端状态为准。结果: 交互慢了一点点，但再也不会出现“假执行”了。"
+        title: "挑战: 状态同步的噩梦",
+        content: "起因: 为了交互快，把状态放在前端管理。结果后端跑完任务，前端状态没更新，用户以为卡死了。思路: 被迫重写了状态管理，以前端为主改为以 WebSocket 推送的后端状态为准。结果: 交互慢了一点点，但再也不会出现“假执行”了。收获:在异步任务流中，数据的一致性优先级高于交互的即时性，用户的等待需要被真实的状态填补。"
       },
       {
         title: "挑战: 界面细节调整",
-        content: "起因: 想要界面好看点，但 CSS 很难调。思路: 不断截图给 AI 看，让它帮我微调参数。结果: 调出了满意的效果。"
+        content: "起因: 作为开发者，在 CSS 像素级还原上耗时过长。思路: 与多模态 AI 共同进行视觉和代码上的博弈，辅助微调布局参数。结果: 调出了满意的效果。收获: 善用 AI 的视觉识别能力，可以有效填补开发者在 UI 审美与实现之间的“像素差”。"
       }
-    ]
+    ],
+    conclusion: "起初，我只是想做一个能让自己躺在沙发上跑图的‘遥控器’。但随着开发的深入，我意识到‘好用’的门槛比想象中高得多——不仅要能跑通，还要跑得顺手。为了消除点击按钮后的那种‘不确定感’，我不得不去死磕底层的通信逻辑。这个工具的每一个细节打磨，不是为了追求极致的技术指标，而是为了让像我一样的创作者，在按下‘生成’键的那一刻，能感到踏实和掌控。"
   },
   {
     id: "plugin-2",
     title: "ComfyUI-ZKZNodes",
-    description: "一套 ComfyUI 自定义节点集合。包含了计数器、队列管理、图像裁剪等实用工具，都是为了解决我在实际使用中遇到的小问题。",
+    description: "面向生产环境的 ComfyUI 功能扩展库。弥补了原生节点在逻辑控制（计数/队列）与精细化图像处理（透明裁切/边缘检测）方面的能力缺失。",
     type: "plugin",
     technologies: ["Python", "JavaScript", "ComfyUI Custom Nodes"],
     year: "2025",
     status: "active",
-    github: "#",
     plugin: {
       colorTheme: "purple",
       hasGlobalComparison: false,
       painPoint: {
-        title: "功能缺失与流程断点",
-        desc: "用 ComfyUI 的时候经常觉得“要是能有个节点能自动计数就好了”或者“要是能自动裁剪透明区域就好了”。既然官方没有，我就自己用 AI 写一个。",
+        desc: "原生 ComfyUI 在处理“循环逻辑”与“Alpha 通道精细操作”时存在明显的组件空白。用户往往因为缺乏一个基础的“计数器”或“裁剪器”，而不得不中断工作流去寻求外部软件的帮助，导致生产链路割裂。",
         stats: ["功能缺失", "流程中断"]
-      },
-      pipeline: {
-        input: "标准 ComfyUI 数据流",
-        process: "自定义节点逻辑 (Python/JS)",
-        output: "增强后的数据流 / 文件产物"
-      },
-      installation: {
-        cmd: "git clone into custom_nodes"
       },
       items: [
         // Logic Nodes
@@ -254,52 +229,43 @@ export const pluginProjects: Project[] = [
     },
     insights: [
       {
-        title: "挑战: 节点不显示",
-        content: "起因: 代码写好了，但 ComfyUI 里找不到节点。思路: 发现是忘了在配置文件里注册节点。结果: 加上注册代码就显示了。"
+        title: "挑战: 视觉直觉与代码逻辑的鸿沟",
+        content: "起因: 作为美术，我很清楚“裁剪透明区域”是什么效果，但不知道如何用代码去操作多维数组来实现它。思路: 我不再试图去学高深的线性代数，而是用自然语言把“像素变化规律”描述给 AI。结果: 实现了想要的功能。收获: 编程的本质不是背诵语法，而是把感性的视觉需求准确翻译成理性的数学逻辑，AI 是这个过程最好的翻译官。"
+      },
+      {
+        title: "挑战: 静默失败的调试",
+        content: "起因: 节点代码本身逻辑完备，但加载后“凭空消失”，控制台没有任何错误堆栈信息。思路: 深入排查 ComfyUI 的插件加载机制，发现宿主程序依赖 __init__.py 中的 NODE_CLASS_MAPPINGS 字典来建立索引，而非自动扫描类。结果: 加上注册代码就显示了。收获: 系统集成不仅仅是写好功能类，更要严格遵守宿主程序的“握手协议”，接口定义的规范性决定了代码的可见性。"
       },
       {
         title: "挑战: 连线报错",
-        content: "起因: 节点的输入输出类型不匹配，连不上。思路: 严格按照 ComfyUI 的类型规范来定义。结果: 连线正常了。"
+        content: "起因: 自定义节点的输入输出缺乏严格定义，导致在复杂连线中经常报错。思路: 建立完善的类型检查机制，确保 INT、FLOAT 等数据类型严格对应。结果: 连线正常了。收获: 建立完善的类型检查机制，确保 INT、FLOAT 等数据类型严格对应。"
       },
       {
         title: "挑战: 计数器不动",
-        content: "起因: ComfyUI 觉得参数没变就不重新运行。思路: 加了一个随机数种子作为参数，强制它每次都运行。结果: 计数器能动了。"
-      },
-      {
-        title: "挑战: 想改界面交互",
-        content: "起因: 想在节点上加个按钮，但不懂前端。思路: 让 AI 帮我写 JS 扩展。结果: 实现了想要的按钮功能。"
+        content: "起因: ComfyUI 为了节省资源，会自动跳过参数未发生变化的节点（惰性计算）。思路: 引入随机种子作为“触发器”，强制节点在每次运行时都重新计算。结果: 计数器能动了。收获: 开发插件的前提，是必须读懂宿主程序的运行逻辑，顺势而为。"
       }
-    ]
+    ],
+    conclusion: "作为视觉工作者，我对“混乱”有着天然的排斥。这套节点组的初衷，是为了将琐碎的胶水逻辑封装进黑盒，还给工作流一片清爽。在开发过程中，我被迫与 ComfyUI 严苛的类型系统“搏斗”，但最终我理解了这种严谨的必要性。这不仅是一套工具，更是一个非科班开发者试图用工程化的手段，去驯服无序创意的实践记录。"
   },
   {
     id: "plugin-3",
     title: "Lora",
-    description: "一组用于优化图像生成的 LoRA 模型。",
+    description: "基于 Flux Kontext 的图像编辑 LoRA 矩阵。将传统的 PS 修图逻辑（如溶图、去水印、扣印花）转化为 AI 模型能力，专用于设计素材的快速预处理。",
     type: "plugin",
     technologies: ["PyTorch", "Stable Diffusion"],
-    year: "2024",
+    year: "2025",
     status: "active",
-    github: "#",
     plugin: {
       colorTheme: "emerald",
       hasGlobalComparison: false, // Disable global comparison
       painPoint: {
-        title: "后期修补繁琐",
-        desc: "美术的素材图经常有小瑕疵，比如光影不对、有水印或者脸部过曝。每次都要去 PS 里修半天，效率太低。我通过训练这些 LoRA 为他们解决问题。",
+        desc: "在日常设计工作中，处理原始素材耗费了大量精力：把产品合成到背景需要手绘光影、下载的样图有水印、实拍照片过曝或需要提取衣服上的印花。这些机械性的“脏活累活”往往占据了设计师 80% 的时间。",
         stats: ["重复劳动", "效率低下"]
-      },
-      pipeline: {
-        input: "20张特定风格/角色的训练集图片",
-        process: "LoRA 训练 & 权重提取",
-        output: "轻量级风格模型 (.safetensors)",
-      },
-      installation: {
-        cmd: "Place in models/loras folder"
       },
       items: [
         {
           title: "打光溶图",
-          desc: "通过 LoRA 模型精确融合画面光影，实现自然且富有层次的溶图效果，解决合成图像光感不统一的问题。",
+          desc: "针对电商合成场景，当把产品贴入新背景时，模型能依据环境光源自动计算并生成真实的投影与边缘光，代替原本耗时的手动“加深/减淡”操作。",
           tag: "Lighting",
           command: "<lora:lighting_blend:1>",
           image: "/showcase/plugins/plugin-3/items/lighting-before.png",
@@ -308,11 +274,20 @@ export const pluginProjects: Project[] = [
           trainingThoughts: "重点在于准备高质量前后对比图集。图像素材收集可借助AI，取成品图使用AI先去除产品，再将产品扣出，略调整产品光影、对比度、颜色等，而后贴回原位置，制作前后对比图。",
           problem: "传统溶图需要大量手动绘制光影，效率低且容易穿帮。",
           solution: "自动化生成符合环境光照的融合效果，大幅提升合成效率。",
-          features: ["环境光匹配", "边缘光影融合", "多光源支持"]
+          features: ["环境光匹配", "边缘光影融合", "多光源支持"],
+          trainingParams: {
+            resolution: "1024x1024",
+            rank: "64",
+            dataset: "30对",
+            learningRate: "1e-4",
+            steps: "1200",
+            baseModel: "flux1-dev-kontext_fp8_scaled.safetensors",
+            triggerWord: "Fix the lighting and blend the product into the background naturally"
+          }
         },
         {
           title: "去水印",
-          desc: "针对性训练的去水印模型，能够智能识别并移除画面中的复杂水印，同时自动修补被遮挡的纹理细节。",
+          desc: "不同于传统的污点修复工具，该模型能理解被水印覆盖的物体结构。在移除水印的同时，基于上下文逻辑“脑补”出原本被遮挡的复杂纹理（如毛发、布料），实现无痕还原。",
           tag: "Utility",
           command: "<lora:watermark_remover:1>",
           image: "/showcase/plugins/plugin-3/items/watermark-before.png",
@@ -321,11 +296,20 @@ export const pluginProjects: Project[] = [
           trainingThoughts: "构建包含“水印/无水印”配对的数据集，强迫模型学习水印覆盖下的图像特征恢复。准备训练素材时“水印”可人为后期添加。",
           problem: "常规去水印工具难以处理大面积或半透明的复杂水印。",
           solution: "利用深度学习理解图像上下文，实现无痕去除与纹理重构。",
-          features: ["复杂水印识别", "纹理智能修补", "保持画质无损"]
+          features: ["复杂水印识别", "纹理智能修补", "保持画质无损"],
+          trainingParams: {
+            resolution: "1024+",
+            rank: "64",
+            dataset: "50对",
+            learningRate: "1e-4",
+            steps: "1600",
+            baseModel: "flux1-dev-kontext_fp8_scaled.safetensors",
+            triggerWord: "Remove image watermark"
+          }
         },
         {
           title: "人像过曝拉回",
-          desc: "专门用于修复过曝人像的 LoRA，能够找回高光溢出区域的皮肤纹理与色彩细节，重塑面部立体感。",
+          desc: "针对实拍人像摄影中的“死白”区域。模型并非简单的压暗亮度，而是重新生成丢失的皮肤毛孔与色调信息，修复因布光失误导致的废片。",
           tag: "Portrait",
           command: "<lora:exposure_fix:0.8>",
           image: "/showcase/plugins/plugin-3/items/exposure-before.png",
@@ -334,11 +318,20 @@ export const pluginProjects: Project[] = [
           trainingThoughts: "使用高动态范围（HDR）图像作为训练底板，让模型学习从过曝信息中推断原始纹理的能力。收集素材方法可与去水印lora类似。",
           problem: "摄影或生成中常见的人像过曝导致面部细节丢失，后期难以挽回。",
           solution: "智能重建高光区域的皮肤纹理，恢复正常的面部光影结构。",
-          features: ["高光细节还原", "肤色自然过渡", "立体感增强"]
+          features: ["高光细节还原", "肤色自然过渡", "立体感增强"],
+          trainingParams: {
+            resolution: "1024+",
+            rank: "64",
+            dataset: "40对",
+            learningRate: "1e-4",
+            steps: "2000",
+            baseModel: "flux1-dev-kontext_fp8_scaled.safetensors",
+            triggerWord: "Correct the overexposure and restore skin details"
+          }
         },
         {
           title: "提取印花",
-          desc: "从复杂背景或实物图中提取纯净印花图案的辅助模型，适用于服装设计与纹理素材制作。",
+          desc: "将拍摄的实物（如褶皱的T恤、贴图的马克杯）还原为平整的数字纹理素材。模型能自动去除光影干扰与透视形变，直接提取出可复用的印花图案。",
           tag: "Design",
           command: "<lora:pattern_extract:1>",
           image: "/showcase/plugins/plugin-3/items/pattern-before.png",
@@ -347,28 +340,38 @@ export const pluginProjects: Project[] = [
           trainingThoughts: "训练集专注于‘图案/载体’的分离，强化模型对重复纹理和独立图形的边缘识别能力。对非电商行业爱好者而言，收集素材较为困难苛刻。这是同样可以逆向操作，使用印花图去制作效果图。",
           problem: "从实物照片中提取印花需要繁琐的抠图与去底工作。",
           solution: "一键分离印花与背景，输出可直接用于设计的纯净图案。",
-          features: ["背景自动剔除", "图案完整性保持", "边缘锐利清晰"]
+          features: ["背景自动剔除", "图案完整性保持", "边缘锐利清晰"],
+          trainingParams: {
+            resolution: "1024+",
+            rank: "128",
+            dataset: "60对",
+            learningRate: "1e-4",
+            steps: "2500",
+            baseModel: "flux1-dev-kontext_fp8_scaled.safetensors",
+            triggerWord: "Extract product printing pattern"
+          }
         }
       ]
     },
     insights: [
       {
-        title: "痛点: 训练素材不是越多越好",
-        content: "起因: 一开始塞了100多张图，结果练出来的模型效果很差。思路: 精选了20张质量最高的图。结果: 效果反而更好了。收获: 素材质量比数量更重要。"
+        title: "挑战: 数据集的“成对”质量",
+        content: "起因: 早期为了追求泛化，使用了大量素材，未严格处理素材的对齐，导致模型在修图时出现严重的重影。思路: 彻底清洗数据集，构建像素级对齐的 Before/After 成对数据（Paired Dataset），并剔除任何模糊样本。收获: 在图像编辑任务中，数据的“精准度”远比“规模”重要，20 对高质量数据足以训练出生产级模型。"
       },
       {
-        title: "痛点: 学习率很难调",
-        content: "起因: 学习率设高了全是噪点，设低了学不会。思路: 试了很多次，找到了一个合适的区间。结果: 模型收敛了。"
+        title: "挑战: 学习率与细节保留",
+        content: "起因: 高学习率下，虽然速度是快了，但模型容易“用力过猛”，在去除水印的同时也抹平了衣服的纹理细节。思路: 采用低学习率配合高 Rank 的策略，让模型“缓慢”地学习变化特征。收获: 图像编辑的本质是“微创手术”，参数调整必须在“改变”与“保留”之间找到极窄的平衡点。"
       },
       {
-        title: "痛点: 容易污染底模",
-        content: "起因: 练好的模型会影响其他不该影响的东西。思路: 给训练素材都打上特定的标签。结果: 只有输入标签时才会触发效果。"
+        title: "挑战: 结构保持",
+        content: "起因: 以前为了防止画风污染，必须准备很多张正则图。但在训练 Flux 时发现，即便不加正则，模型也能完美隔离概念。思路: 放弃复杂的正则集，专注于精准的触发词设计。收获: 强大的底模让“概念隔离”变得自动化，我们终于可以专注于模型功能本身，而不是由于技术缺陷带来的补丁。"
       },
       {
-        title: "痛点: 训练太慢",
-        content: "起因: 默认设置跑太久了。思路: 发现其实跑一半步数效果就差不多了。结果: 节省了一半时间。"
+        title: "挑战: 训练步数的边际效应",
+        content: "起因: 习惯性地跑几千步，结果模型过拟合，对非训练集的泛化能力极差。思路: 采用“人肉盲测”法，每隔一定步数保存一个版本，最后通过实际修图效果进行横向比对（XYZ Plot）。结果: 最佳模型往往不是跑完进度条的那个，而是中间某个“刚刚好”的版本。收获: 在图像编辑领域，数据曲线可能会骗人，但设计师的眼睛不会。"
       }
-    ]
+    ],
+    conclusion: "这套模型库的初衷，是想把设计师从枯燥的“素材处理”中解放出来。以前需要精修一小时的溶图光影，现在只需数秒。训练这些 LoRA 的过程，其实是在教 AI 学习 PS 高手的“手感”——如何处理高光、如何平整纹理。这不是关于创造力的宏大叙事，这是关于效率的极致务实：让机器去处理像素，让人回归设计。"
   },
   {
     id: "plugin-4",
@@ -378,22 +381,12 @@ export const pluginProjects: Project[] = [
     technologies: ["Python", "Blender API", "Batch Processing"],
     year: "2024",
     status: "completed",
-    github: "#",
     plugin: {
       colorTheme: "orange",
       hasGlobalComparison: false,
       painPoint: {
-        title: "手动渲染效率低下",
-        desc: "做一个产品展示，要出几十张图，换背景、换角度、换材质，每次都要手动点，容易出错还特别累。我就写了这个插件，自动帮我把这些组合都渲染出来。",
+        desc: "商业渲染往往面临 N 个产品 × M 个视角 × K 种环境的“笛卡尔积”式需求。手动管理成百上千个渲染图层不仅效率低下，且极易因人为疲劳导致材质错配或命名混乱。",
         stats: ["重复操作繁琐", "内存溢出频发"]
-      },
-      pipeline: {
-        input: "设计图文件夹 + 背景库 + Blender源文件",
-        process: "智能队列调度 -> 自动材质替换 -> 内存监控与GC -> 断点续传",
-        output: "结构化命名的成品图库"
-      },
-      installation: {
-        cmd: "Install via Blender Preferences > Add-ons"
       },
       items: [
 
@@ -481,13 +474,14 @@ export const pluginProjects: Project[] = [
     },
     insights: [
       {
-        title: "痛点: 配置繁琐与命名约束",
-        content: "起因: 渲染层级多时配置极易混乱，且对材质命名有严格匹配要求。思路: 开发了“视图一键克隆”功能来复用配置，减轻重复劳动。结果: 解决了配置效率问题，但严格的命名规范依然是当前的体验瓶颈，后续需引入模糊匹配。"
+        title: "挑战: 配置繁琐与命名约束",
+        content: "起因: 渲染层级多时配置极易混乱，且对材质命名有严格匹配要求。思路: 开发了“视图一键克隆”功能来复用配置，减轻重复劳动。结果: 解决了配置效率问题，但严格的命名规范依然是当前的体验瓶颈，后续需引入模糊匹配。收获: 自动化工具的尽头是规范化，没有规范就没有自动化。"
       },
       {
-        title: "痛点: 渲染久了内存爆满",
-        content: "起因: 连续渲染几百张图，内存不释放，最后 Blender 崩了。思路: 加上了强制清理内存的代码。结果: 内存占用稳定了，不会崩了。"
+        title: "挑战: 渲染久了内存爆满",
+        content: "Blender 在脚本模式下并不会自动释放上一张图占用的纹理内存，导致渲染速度随时间线性下降甚至崩溃。思路: 在每一帧渲染结束后，显式调用底层 API 强制清除未引用数据块。收获: 对于长期运行的脚本，内存泄漏的治理是比功能实现更严峻的挑战。"
       }
-    ]
+    ],
+    conclusion: "面对几百个 SKU 的渲染需求，手动操作不仅是体力的透支，更是对创造力的浪费。我开发这个插件的初衷很简单：我想把时间花在“设计”上，而不是“点击”上。"
   },
 ]

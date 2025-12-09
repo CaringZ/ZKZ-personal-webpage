@@ -35,7 +35,7 @@ export function PluginThemeBlender({ project }: PluginThemeBlenderProps) {
         const [body, takeaway] = text.split("收获:")
         return {
             body: (body || text).trim(),
-            takeaway: (takeaway || "先找痛点，再落方案，最后复盘。").trim(),
+            takeaway: (takeaway || "").trim(),
         }
     }
 
@@ -90,7 +90,7 @@ export function PluginThemeBlender({ project }: PluginThemeBlenderProps) {
                     <div className="grid md:grid-cols-2 gap-16 items-center">
                         <div className="space-y-8">
                             <div className="inline-block px-3 py-1 rounded bg-red-500/10 text-red-400 text-xs border border-red-500/20 uppercase tracking-[0.2em]">
-                                生产力瓶颈 // CRITICAL BOTTLENECK
+                                核心痛点 // CORE PAIN POINT
                             </div>
                             <h2 className="text-4xl font-bold text-white">我为什么要做这个工具</h2>
                             <p className="text-zinc-400 leading-relaxed text-lg border-l-2 border-red-500/30 pl-6">
@@ -139,7 +139,7 @@ export function PluginThemeBlender({ project }: PluginThemeBlenderProps) {
                                 <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-orange-900/20 border border-orange-800/60 text-orange-400 text-[11px] tracking-[0.2em] uppercase">
                                     遇到的问题
                                 </div>
-                                <h2 className="text-3xl font-bold text-white">从痛点到行动的过程</h2>
+                                <h2 className="text-3xl font-bold text-white">从问题到行动的过程</h2>
                                 <p className="text-zinc-400 max-w-3xl mx-auto text-sm md:text-base">
                                     真实碰到的坑和当时的应对，而不只是结果。
                                 </p>
@@ -162,15 +162,11 @@ export function PluginThemeBlender({ project }: PluginThemeBlenderProps) {
                                                     {String(idx + 1).padStart(2, '0')}
                                                 </div>
                                                 <div className="flex-1">
-                                                    <div className="text-[10px] text-orange-600 uppercase tracking-[0.2em] mb-1">Pain → Solution</div>
+                                                    <div className="text-[10px] text-orange-600 uppercase tracking-[0.2em] mb-1">Problem → Solution</div>
                                                     <h3 className="text-lg font-bold text-white">{insight.title}</h3>
                                                 </div>
                                             </div>
-                                            <p className="text-zinc-400 leading-relaxed text-sm mb-4">{body}</p>
-                                            <div className="flex items-start gap-2 text-xs text-orange-400/80 bg-orange-900/10 p-3 rounded border border-orange-900/20">
-                                                <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" />
-                                                <span>收获：{takeaway}</span>
-                                            </div>
+                                            <p className="text-zinc-400 leading-relaxed text-sm">{body}</p>
                                         </motion.div>
                                     )
                                 })}
@@ -440,31 +436,25 @@ export function PluginThemeBlender({ project }: PluginThemeBlenderProps) {
             }
 
             {/* Final Takeaways */}
-            {
-                project.insights && project.insights.length > 0 && (
-                    <section className="relative z-10 py-24 px-6 bg-[#0a0a0a] border-t border-orange-900/30">
-                        <div className="max-w-5xl mx-auto space-y-10 text-center">
-                            <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-orange-900/20 border border-orange-800/60 text-orange-400 text-[11px] tracking-[0.2em] uppercase">
-                                心得体会
-                            </div>
-                            <h2 className="text-3xl font-bold text-white">做完之后的收获</h2>
-                            <div className="grid md:grid-cols-2 gap-6 text-left">
-                                {project.insights.map((insight, idx) => {
-                                    const { takeaway } = splitInsight(insight.content)
-                                    return (
-                                        <div key={idx} className="p-6 rounded-lg bg-[#0f0f0f] border border-orange-900/40 hover:border-orange-500/30 transition-colors">
-                                            <div className="text-xs text-orange-500/70 mb-3 font-mono">收获 #{String(idx + 1).padStart(2, '0')}</div>
-                                            <h3 className="text-lg text-white font-semibold mb-3">{insight.title}</h3>
-                                            <p className="text-zinc-400 text-sm leading-relaxed">{takeaway}</p>
-                                        </div>
-                                    )
-                                })}
+            {project.conclusion && (
+                <section className="relative z-10 py-24 px-6 bg-[#0a0a0a] border-t border-orange-900/30">
+                    <div className="max-w-4xl mx-auto space-y-10 text-center">
+                        <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-orange-900/20 border border-orange-800/60 text-orange-400 text-[11px] tracking-[0.2em] uppercase">
+                            心得体会
+                        </div>
+                        <h2 className="text-3xl font-bold text-white">做完之后的收获</h2>
+                        <div className="p-8 rounded-2xl bg-[#0f0f0f] border border-orange-900/40 relative overflow-hidden">
+                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-900/0 via-orange-500/50 to-orange-900/0 opacity-50" />
+                            <p className="text-zinc-400 text-lg leading-loose text-left indent-8 font-light">
+                                {project.conclusion}
+                            </p>
+                            <div className="absolute -bottom-4 -right-4 text-orange-900/10 rotate-12">
+                                <Box className="w-32 h-32" />
                             </div>
                         </div>
-                    </section>
-                )
-            }
-
+                    </div>
+                </section>
+            )}
         </div >
     )
 }

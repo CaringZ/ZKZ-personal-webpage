@@ -39,7 +39,7 @@ export function MatureProjectTheme({ project }: MatureProjectThemeProps) {
         const [body, takeaway] = text.split("收获:")
         return {
             body: (body || text).trim(),
-            takeaway: (takeaway || "先看痛点，再定方案，最后总结收获。").trim(),
+            takeaway: (takeaway || "").trim(),
         }
     }
 
@@ -175,7 +175,7 @@ export function MatureProjectTheme({ project }: MatureProjectThemeProps) {
                                 <div className="p-2 rounded-lg bg-white/5 border border-white/10 text-white/80">
                                     <AlertTriangle className="w-4 h-4" />
                                 </div>
-                                <div className="text-xs font-mono text-white/40 uppercase tracking-widest">Core Motivation</div>
+                                <div className="text-xs font-mono text-white/40 uppercase tracking-widest">Core Pain Point</div>
                             </div>
 
                             <div className="space-y-4">
@@ -206,7 +206,7 @@ export function MatureProjectTheme({ project }: MatureProjectThemeProps) {
                                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 text-white/50 border border-white/10">
                                     <span className="text-[10px] tracking-[0.2em] uppercase">Engineering Log</span>
                                 </div>
-                                <h2 className="text-3xl md:text-4xl font-bold text-white">从痛点出发的<br />解决思路</h2>
+                                <h2 className="text-3xl md:text-4xl font-bold text-white">从问题到行动的过程</h2>
                                 <p className="text-slate-400 text-sm leading-relaxed">
                                     记录做事时遇到的阻力和当时的行动方案，先把坑填平，再谈优化。
                                 </p>
@@ -226,8 +226,8 @@ export function MatureProjectTheme({ project }: MatureProjectThemeProps) {
                                         >
                                             <div className="absolute top-8 right-8 text-[10px] font-mono text-white/20">0{i + 1}</div>
 
-                                            <div className="mb-6">
-                                                <p className="text-[10px] uppercase tracking-[0.2em] text-white/30 mb-2">Challenge</p>
+                                            <div className="mb-4">
+                                                <p className="text-[10px] uppercase tracking-[0.2em] text-white/30 mb-2">Problem → Solution</p>
                                                 <h3 className="text-xl font-bold text-white leading-tight">
                                                     {insight.title}
                                                 </h3>
@@ -238,10 +238,6 @@ export function MatureProjectTheme({ project }: MatureProjectThemeProps) {
                                                     <p className="text-slate-400 leading-relaxed text-sm">
                                                         {body}
                                                     </p>
-                                                </div>
-                                                <div className="flex items-center gap-2 text-xs text-white/40 bg-white/[0.02] p-3 rounded">
-                                                    <Lightbulb className="w-3 h-3 text-yellow-500/50" />
-                                                    <span>收获：{takeaway}</span>
                                                 </div>
                                             </div>
                                         </motion.div>
@@ -300,29 +296,22 @@ export function MatureProjectTheme({ project }: MatureProjectThemeProps) {
             </section>
 
             {/* Final Takeaways */}
-            {project.insights && project.insights.length > 0 && (
+            {project.conclusion && (
                 <section className="relative py-32 px-6 z-10 bg-[#050505] border-t border-white/5">
                     <div className="max-w-4xl mx-auto text-center space-y-12">
                         <div className="w-16 h-16 mx-auto bg-white/5 rounded-full flex items-center justify-center border border-white/10">
                             <Lightbulb className="w-6 h-6 text-white/60" />
                         </div>
-
                         <div className="space-y-4">
                             <h2 className="text-3xl font-bold text-white">心得体会</h2>
                             <p className="text-slate-400 text-sm">做完之后最重要的收获与反思。</p>
                         </div>
 
-                        <div className="grid md:grid-cols-2 gap-4 text-left">
-                            {project.insights.map((insight, idx) => {
-                                const { takeaway } = splitInsight(insight.content)
-                                return (
-                                    <div key={idx} className="p-6 rounded-xl bg-[#0a0a0a] border border-white/5 hover:border-white/10 transition-colors">
-                                        <div className="text-[10px] text-white/30 mb-3 font-mono uppercase tracking-wider">Takeaway 0{idx + 1}</div>
-                                        <h3 className="text-base text-white font-medium mb-2">{insight.title}</h3>
-                                        <p className="text-slate-400 text-sm leading-relaxed">{takeaway}</p>
-                                    </div>
-                                )
-                            })}
+                        <div className="p-10 rounded-2xl bg-white/[0.02] border border-white/5 relative overflow-hidden">
+                            <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                            <p className="text-slate-300 text-lg leading-loose text-left indent-8 font-light">
+                                {project.conclusion}
+                            </p>
                         </div>
                     </div>
                 </section>

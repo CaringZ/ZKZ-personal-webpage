@@ -311,7 +311,11 @@ export function HobbyProjectTheme({ project }: HobbyProjectThemeProps) {
                                     <div className="w-full h-full flex items-center justify-center relative">
                                         <video
                                             src={screenRecording + "#t=0.001"}
+                                            poster={screenPoster}
                                             controls
+                                            controlsList="nodownload noplaybackrate"
+                                            disablePictureInPicture
+                                            onContextMenu={(e) => e.preventDefault()}
                                             className="w-full h-full object-cover"
                                             playsInline
                                             preload="metadata"

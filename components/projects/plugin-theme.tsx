@@ -46,7 +46,7 @@ export function PluginProjectTheme({ project }: PluginProjectThemeProps) {
         const [body, takeaway] = text.split("收获:")
         return {
             body: (body || text).trim(),
-            takeaway: (takeaway || "先找痛点，再落方案，最后复盘。").trim(),
+            takeaway: (takeaway || "").trim(),
         }
     }
 
@@ -109,7 +109,7 @@ export function PluginProjectTheme({ project }: PluginProjectThemeProps) {
                     <div className="grid md:grid-cols-2 gap-16 items-center">
                         <div className="space-y-8">
                             <div className="inline-block px-3 py-1 rounded bg-red-500/10 text-red-400 text-xs border border-red-500/20 uppercase tracking-[0.2em]">
-                                终极痛点 // CRITICAL ERROR
+                                核心痛点 // CORE PAIN POINT
                             </div>
                             <h2 className="text-4xl font-bold text-white">我为什么要做这个工具</h2>
                             <p className="leading-relaxed text-lg border-l-2 border-red-500/30 pl-6 text-zinc-400">
@@ -216,7 +216,7 @@ export function PluginProjectTheme({ project }: PluginProjectThemeProps) {
                                 >
                                     遇到的问题
                                 </div>
-                                <h2 className="text-3xl font-bold text-white">从痛点到行动的过程</h2>
+                                <h2 className="text-3xl font-bold text-white">从问题到行动的过程</h2>
                                 <p className="max-w-3xl mx-auto text-sm md:text-base text-zinc-400">
                                     真实碰到的坑和当时的应对，而不只是结果。
                                 </p>
@@ -243,18 +243,11 @@ export function PluginProjectTheme({ project }: PluginProjectThemeProps) {
                                                     {String(idx + 1).padStart(2, '0')}
                                                 </div>
                                                 <div className="flex-1">
-                                                    <div className="text-[10px] uppercase tracking-[0.2em] mb-1" style={{ color: theme.secondary }}>Pain → Solution</div>
+                                                    <div className="text-[10px] uppercase tracking-[0.2em] mb-1" style={{ color: theme.secondary }}>Problem → Solution</div>
                                                     <h3 className="text-lg font-bold text-white">{insight.title}</h3>
                                                 </div>
                                             </div>
-                                            <p className="leading-relaxed text-sm mb-4 text-zinc-400">{body}</p>
-                                            <div
-                                                className="flex items-start gap-2 text-xs p-3 rounded border"
-                                                style={{ backgroundColor: theme.bg, color: theme.primary, borderColor: theme.border }}
-                                            >
-                                                <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" />
-                                                <span>收获：{takeaway}</span>
-                                            </div>
+                                            <p className="leading-relaxed text-sm text-zinc-400">{body}</p>
                                         </motion.div>
                                     )
                                 })}
@@ -477,38 +470,28 @@ export function PluginProjectTheme({ project }: PluginProjectThemeProps) {
             }
 
             {/* Final Takeaways */}
-            {
-                project.insights && project.insights.length > 0 && (
-                    <section className="relative z-10 py-24 px-6 bg-[#0a0a0a] border-t" style={{ borderColor: theme.border }}>
-                        <div className="max-w-5xl mx-auto space-y-10 text-center">
-                            <div
-                                className="inline-flex items-center gap-2 px-4 py-1 rounded-full border text-[11px] tracking-[0.2em] uppercase"
-                                style={{ backgroundColor: theme.bg, borderColor: theme.border, color: theme.primary }}
-                            >
-                                心得体会
-                            </div>
-                            <h2 className="text-3xl font-bold text-white">做完之后的收获</h2>
-                            <div className="grid md:grid-cols-2 gap-6 text-left">
-                                {project.insights.map((insight, idx) => {
-                                    const { takeaway } = splitInsight(insight.content)
-                                    return (
-                                        <div
-                                            key={idx}
-                                            className="p-6 rounded-lg bg-[#0f0f0f] border transition-colors"
-                                            style={{ borderColor: theme.border }}
-                                        >
-                                            <div className="text-xs mb-3 font-mono" style={{ color: theme.primary, opacity: 0.7 }}>收获 #{String(idx + 1).padStart(2, '0')}</div>
-                                            <h3 className="text-lg text-white font-semibold mb-3">{insight.title}</h3>
-                                            <p className="text-sm leading-relaxed text-zinc-400">{takeaway}</p>
-                                        </div>
-                                    )
-                                })}
-                            </div>
+            {project.conclusion && (
+                <section className="relative z-10 py-24 px-6 bg-[#0a0a0a] border-t" style={{ borderColor: theme.border }}>
+                    <div className="max-w-4xl mx-auto space-y-10 text-center">
+                        <div
+                            className="inline-flex items-center gap-2 px-4 py-1 rounded-full border text-[11px] tracking-[0.2em] uppercase"
+                            style={{ backgroundColor: theme.bg, borderColor: theme.border, color: theme.primary }}
+                        >
+                            心得体会
                         </div>
-                    </section>
-                )
-            }
-
+                        <h2 className="text-3xl font-bold text-white">做完之后的收获</h2>
+                        <div
+                            className="p-8 rounded-2xl border relative overflow-hidden"
+                            style={{ backgroundColor: theme.bg, borderColor: theme.border }}
+                        >
+                            <div className="absolute top-0 left-0 w-full h-1 opacity-50" style={{ background: `linear-gradient(90deg, transparent, ${theme.primary}, transparent)` }} />
+                            <p className="text-zinc-400 text-lg leading-loose text-left indent-8 font-light">
+                                {project.conclusion}
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            )}
         </div >
     )
 }

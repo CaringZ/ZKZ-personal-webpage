@@ -2,7 +2,7 @@
 
 import { useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
-import { ArrowRight, Box, Layers, Settings, Sliders, Terminal, Wand2, Wrench, Hammer, Zap, Image as ImageIcon, CheckCircle2 } from "lucide-react"
+import { ArrowRight, Box, Layers, Settings, Sliders, Terminal, Wand2, Wrench, Hammer, Zap, Image as ImageIcon, CheckCircle2, Activity } from "lucide-react"
 import type { Project } from "@/lib/projects-data"
 import { ComparisonSlider } from "@/components/ui/comparison-slider"
 import { ImageLightbox } from "@/components/ui/image-lightbox"
@@ -35,7 +35,7 @@ export function PluginThemeLora({ project }: PluginThemeLoraProps) {
         const [body, takeaway] = text.split("收获:")
         return {
             body: (body || text).trim(),
-            takeaway: (takeaway || "先找痛点，再落方案，最后复盘。").trim(),
+            takeaway: (takeaway || "").trim(),
         }
     }
 
@@ -90,7 +90,7 @@ export function PluginThemeLora({ project }: PluginThemeLoraProps) {
                     <div className="grid md:grid-cols-2 gap-16 items-center">
                         <div className="space-y-8">
                             <div className="inline-block px-3 py-1 rounded bg-red-500/10 text-red-400 text-xs border border-red-500/20 uppercase tracking-[0.2em]">
-                                工作流瓶颈 // WORKFLOW BOTTLENECK
+                                核心痛点 // CORE PAIN POINT
                             </div>
                             <h2 className="text-4xl font-bold text-white">我为什么要做这个工具</h2>
                             <p className="text-zinc-400 leading-relaxed text-lg border-l-2 border-red-500/30 pl-6">
@@ -155,7 +155,7 @@ export function PluginThemeLora({ project }: PluginThemeLoraProps) {
                             <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-emerald-900/20 border border-emerald-800/60 text-emerald-400 text-[11px] tracking-[0.2em] uppercase">
                                 遇到的问题
                             </div>
-                            <h2 className="text-3xl font-bold text-white">从痛点到行动的过程</h2>
+                            <h2 className="text-3xl font-bold text-white">从问题到行动的过程</h2>
                             <p className="text-zinc-400 max-w-3xl mx-auto text-sm md:text-base">
                                 真实碰到的坑和当时的应对，而不只是结果。
                             </p>
@@ -178,15 +178,11 @@ export function PluginThemeLora({ project }: PluginThemeLoraProps) {
                                                 {String(idx + 1).padStart(2, '0')}
                                             </div>
                                             <div className="flex-1">
-                                                <div className="text-[10px] text-emerald-600 uppercase tracking-[0.2em] mb-1">Pain → Solution</div>
+                                                <div className="text-[10px] text-emerald-600 uppercase tracking-[0.2em] mb-1">Problem → Solution</div>
                                                 <h3 className="text-lg font-bold text-white">{insight.title}</h3>
                                             </div>
                                         </div>
-                                        <p className="text-zinc-400 leading-relaxed text-sm mb-4">{body}</p>
-                                        <div className="flex items-start gap-2 text-xs text-emerald-400/80 bg-emerald-900/10 p-3 rounded border border-emerald-900/20">
-                                            <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" />
-                                            <span>收获：{takeaway}</span>
-                                        </div>
+                                        <p className="text-zinc-400 leading-relaxed text-sm">{body}</p>
                                     </motion.div>
                                 )
                             })}
@@ -230,8 +226,8 @@ export function PluginThemeLora({ project }: PluginThemeLoraProps) {
 
                                     {/* Content Grid */}
                                     <div className="grid lg:grid-cols-2 gap-12 items-stretch">
-                                        {/* Left Column: Training Set & Thoughts */}
-                                        <div className="flex flex-col gap-8">
+                                        {/* Left Column: Training Set + Features + Training Thoughts */}
+                                        <div className="flex flex-col gap-6">
                                             {/* Training Set */}
                                             {item.trainingImage && (
                                                 <div className="aspect-video bg-[#0f0f0f] rounded-xl border border-emerald-900/30 overflow-hidden relative group shrink-0 shadow-2xl">
@@ -249,14 +245,29 @@ export function PluginThemeLora({ project }: PluginThemeLoraProps) {
                                                 </div>
                                             )}
 
-                                            {/* Training Thoughts */}
-                                            {item.trainingThoughts && (
-                                                <div className="bg-[#0f0f0f] border border-emerald-900/30 rounded-xl p-8 relative overflow-hidden flex-1">
-                                                    <div className="absolute top-0 right-0 p-4 opacity-10">
-                                                        <Box className="w-24 h-24 text-emerald-500" />
+                                            {/* Features (Top) */}
+                                            {item.features && (
+                                                <div className="bg-[#0f0f0f] border border-emerald-900/30 rounded-xl p-5">
+                                                    <div className="text-xs text-emerald-500/70 uppercase tracking-wider font-bold mb-3">Key Features</div>
+                                                    <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs font-mono text-emerald-500/60">
+                                                        {item.features?.map((feature, i) => (
+                                                            <div key={i} className="flex items-center gap-2">
+                                                                <Zap className="w-3 h-3 shrink-0" />
+                                                                <span>{feature}</span>
+                                                            </div>
+                                                        ))}
                                                     </div>
-                                                    <div className="relative z-10 space-y-4">
-                                                        <div className="flex items-center gap-2 text-emerald-500/70 uppercase tracking-wider font-bold text-xs">
+                                                </div>
+                                            )}
+
+                                            {/* Training Thoughts (Bottom) */}
+                                            {item.trainingThoughts && (
+                                                <div className="bg-[#0f0f0f] border border-emerald-900/30 rounded-xl p-5 relative overflow-hidden flex-1">
+                                                    <div className="absolute top-0 right-0 p-3 opacity-10">
+                                                        <Box className="w-16 h-16 text-emerald-500" />
+                                                    </div>
+                                                    <div className="relative z-10">
+                                                        <div className="flex items-center gap-2 text-emerald-500/70 uppercase tracking-wider font-bold text-xs mb-3">
                                                             <Layers className="w-4 h-4" />
                                                             训练思路 // Methodology
                                                         </div>
@@ -266,10 +277,20 @@ export function PluginThemeLora({ project }: PluginThemeLoraProps) {
                                                     </div>
                                                 </div>
                                             )}
+
+                                            {/* Command */}
+                                            {item.command && (
+                                                <div className="flex items-center gap-2 p-3 bg-black/40 rounded-lg border border-emerald-900/30">
+                                                    <Terminal className="w-4 h-4 text-emerald-500 shrink-0" />
+                                                    <code className="font-mono text-sm text-emerald-400 break-all">
+                                                        {item.command}
+                                                    </code>
+                                                </div>
+                                            )}
                                         </div>
 
-                                        {/* Right Column: Comparison & Features */}
-                                        <div className="flex flex-col gap-8">
+                                        {/* Right Column: Comparison + Training Params */}
+                                        <div className="flex flex-col gap-6">
                                             {/* Comparison Slider */}
                                             <div className="relative aspect-video bg-[#0f0f0f] rounded-xl border border-emerald-900/30 overflow-hidden group shadow-2xl shrink-0">
                                                 {item.comparisonImage ? (
@@ -289,33 +310,47 @@ export function PluginThemeLora({ project }: PluginThemeLoraProps) {
                                                 )}
                                             </div>
 
-                                            {/* Features & Command */}
-                                            <div className="bg-[#0f0f0f] border border-emerald-900/30 rounded-xl p-8 space-y-6 flex-1 flex flex-col">
-                                                {item.features && (
-                                                    <div className="space-y-3 flex-1">
-                                                        <div className="text-xs text-emerald-500/70 uppercase tracking-wider font-bold">Key Features</div>
-                                                        <div className="grid gap-2">
-                                                            {item.features.map((feature, fIdx) => (
-                                                                <div key={fIdx} className="flex items-start gap-2 text-sm text-zinc-400">
-                                                                    <Zap className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
-                                                                    <span>{feature}</span>
-                                                                </div>
-                                                            ))}
+                                            {/* Training Parameters */}
+                                            {item.trainingParams && (
+                                                <div className="bg-[#0f0f0f] border border-emerald-900/30 rounded-xl p-5 flex-1">
+                                                    <div className="flex items-center gap-2 text-emerald-500/70 uppercase tracking-wider font-bold text-xs mb-5">
+                                                        <Activity className="w-4 h-4" />
+                                                        训练参数 // Training Specs
+                                                    </div>
+                                                    <div className="grid grid-cols-2 gap-x-6 gap-y-4">
+                                                        <div>
+                                                            <div className="text-[10px] uppercase tracking-wider text-emerald-500/40 mb-1">Resolution</div>
+                                                            <div className="text-sm text-emerald-100 font-mono">{item.trainingParams.resolution}</div>
+                                                        </div>
+                                                        <div>
+                                                            <div className="text-[10px] uppercase tracking-wider text-emerald-500/40 mb-1">Rank</div>
+                                                            <div className="text-sm text-emerald-100 font-mono">{item.trainingParams.rank}</div>
+                                                        </div>
+                                                        <div>
+                                                            <div className="text-[10px] uppercase tracking-wider text-emerald-500/40 mb-1">Dataset</div>
+                                                            <div className="text-sm text-emerald-100 font-mono">{item.trainingParams.dataset}</div>
+                                                        </div>
+                                                        <div>
+                                                            <div className="text-[10px] uppercase tracking-wider text-emerald-500/40 mb-1">Steps</div>
+                                                            <div className="text-sm text-emerald-100 font-mono">{item.trainingParams.steps}</div>
+                                                        </div>
+                                                        <div>
+                                                            <div className="text-[10px] uppercase tracking-wider text-emerald-500/40 mb-1">Learning Rate</div>
+                                                            <div className="text-sm text-emerald-100 font-mono">{item.trainingParams.learningRate}</div>
+                                                        </div>
+                                                        <div>
+                                                            <div className="text-[10px] uppercase tracking-wider text-emerald-500/40 mb-1">Base Model</div>
+                                                            <div className="text-sm text-emerald-100 font-mono truncate" title={item.trainingParams.baseModel}>{item.trainingParams.baseModel}</div>
                                                         </div>
                                                     </div>
-                                                )}
-
-                                                {item.command && (
-                                                    <div className="pt-6 border-t border-emerald-900/20 mt-auto">
-                                                        <div className="flex items-center gap-2 p-4 bg-black/40 rounded-lg border border-emerald-900/30">
-                                                            <Terminal className="w-4 h-4 text-emerald-500" />
-                                                            <code className="font-mono text-sm text-emerald-400 break-all">
-                                                                {item.command}
-                                                            </code>
+                                                    <div className="mt-5 pt-4 border-t border-emerald-900/30">
+                                                        <div className="text-[10px] uppercase tracking-wider text-emerald-500/40 mb-2">Trigger Word</div>
+                                                        <div className="text-xs text-emerald-400 font-mono bg-emerald-950/30 px-3 py-2 rounded border border-emerald-900/30 select-all break-all">
+                                                            {item.trainingParams.triggerWord}
                                                         </div>
                                                     </div>
-                                                )}
-                                            </div>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
 
@@ -352,29 +387,26 @@ export function PluginThemeLora({ project }: PluginThemeLoraProps) {
             )}
 
             {/* Final Takeaways */}
-            {project.insights && project.insights.length > 0 && (
+            {project.conclusion && (
                 <section className="relative z-10 py-24 px-6 bg-[#0a0a0a] border-t border-emerald-900/30">
-                    <div className="max-w-5xl mx-auto space-y-10 text-center">
+                    <div className="max-w-4xl mx-auto space-y-10 text-center">
                         <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-emerald-900/20 border border-emerald-800/60 text-emerald-400 text-[11px] tracking-[0.2em] uppercase">
                             心得体会
                         </div>
                         <h2 className="text-3xl font-bold text-white">做完之后的收获</h2>
-                        <div className="grid md:grid-cols-2 gap-6 text-left">
-                            {project.insights.map((insight, idx) => {
-                                const { takeaway } = splitInsight(insight.content)
-                                return (
-                                    <div key={idx} className="p-6 rounded-lg bg-[#0f0f0f] border border-emerald-900/40 hover:border-emerald-500/30 transition-colors">
-                                        <div className="text-xs text-emerald-500/70 mb-3 font-mono">收获 #{String(idx + 1).padStart(2, '0')}</div>
-                                        <h3 className="text-lg text-white font-semibold mb-3">{insight.title}</h3>
-                                        <p className="text-zinc-400 text-sm leading-relaxed">{takeaway}</p>
-                                    </div>
-                                )
-                            })}
+                        <div className="p-8 rounded-2xl bg-[#0f0f0f] border border-emerald-900/40 relative overflow-hidden group">
+                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-900/0 via-emerald-500/50 to-emerald-900/0 opacity-50" />
+                            <p className="text-zinc-400 text-lg leading-loose text-left indent-8 font-light">
+                                {project.conclusion}
+                            </p>
+                            <div className="absolute -bottom-4 -right-4 text-emerald-900/10 rotate-12">
+                                <Zap className="w-32 h-32" />
+                            </div>
                         </div>
                     </div>
                 </section>
             )}
 
-        </div >
+        </div>
     )
 }

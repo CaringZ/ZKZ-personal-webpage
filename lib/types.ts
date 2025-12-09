@@ -34,16 +34,16 @@ export interface Project {
     plugin?: {
         colorTheme?: "orange" | "blue" | "purple" | "emerald" // New field for color theme
         painPoint: {
-            title: string
+            title?: string
             desc: string
             stats: string[]
         }
-        pipeline: {
+        pipeline?: {
             input: string
             process: string
             output: string
         }
-        installation: {
+        installation?: {
             npm?: string
             cmd?: string
         }
@@ -63,6 +63,15 @@ export interface Project {
             features?: string[] // Key features/steps
             trainingImage?: string
             trainingThoughts?: string
+            trainingParams?: {
+                resolution: string
+                rank: string
+                dataset: string
+                learningRate: string
+                steps: string
+                baseModel: string
+                triggerWord: string
+            }
         }[]
     }
 
@@ -89,4 +98,5 @@ export interface Project {
         title: string
         content: string
     }[]
+    conclusion?: string
 }
