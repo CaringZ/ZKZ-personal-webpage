@@ -310,7 +310,7 @@ export function HobbyProjectTheme({ project }: HobbyProjectThemeProps) {
                                 {activeTab === "preview" ? (
                                     <div className="w-full h-full flex items-center justify-center relative">
                                         <video
-                                            src={screenRecording + "#t=0.001"}
+                                            src={screenRecording}
                                             poster={screenPoster}
                                             controls
                                             controlsList="nodownload noplaybackrate"
@@ -318,7 +318,7 @@ export function HobbyProjectTheme({ project }: HobbyProjectThemeProps) {
                                             onContextMenu={(e) => e.preventDefault()}
                                             className="w-full h-full object-cover"
                                             playsInline
-                                            preload="metadata"
+                                            preload="none"
                                         />
                                     </div>
                                 ) : (

@@ -4,7 +4,7 @@ export const hobbyProjects: Project[] = [
   {
     id: "hobby-1",
     title: "3D Paint Studio",
-    description: "面向 3D 资产生产管线的材质验证与预演（LookDev）工具。基于 AO 白模进行非破坏性的视觉迭代，利用多模态模型逆向推演 Blender 材质节点逻辑，实现从概念草图到工程落地的平滑过渡。",
+    description: "面向 3D 资产生产管线的材质验证与预演工具。基于 AO 白模进行非破坏性的视觉迭代，利用多模态模型逆向推演 Blender 材质节点逻辑，实现从概念草图到工程落地的平滑过渡。",
     type: "hobby",
     technologies: ["Gemini API", "Three.js", "TypeScript", "Blender"],
     year: "2025",
