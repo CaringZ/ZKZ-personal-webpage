@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import { CheckCircle2, Circle, Code2, Coffee, Play, Terminal, Cpu, Layout, Lightbulb, FileJson, FileCode, GitBranch, Search, Settings, MoreHorizontal, History, Activity, Box, Users, Zap } from "lucide-react"
 import type { Project } from "@/lib/projects-data"
-import { useState } from "react"
+import { useState, useRef } from "react"
 
 interface HobbyProjectThemeProps {
     project: Project
@@ -51,6 +51,7 @@ const iconMap: Record<string, any> = {
 
 export function HobbyProjectTheme({ project }: HobbyProjectThemeProps) {
     const [activeTab, setActiveTab] = useState<"preview" | "terminal">("preview")
+    const videoRef = useRef<HTMLVideoElement>(null)
     const ultimatePain = project.description
     const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
     const withBasePath = (path: string) => path?.startsWith('http') ? path : `${basePath}${path}`
@@ -310,13 +311,24 @@ export function HobbyProjectTheme({ project }: HobbyProjectThemeProps) {
                                 {activeTab === "preview" ? (
                                     <div className="w-full h-full flex items-center justify-center relative">
                                         <video
+                                            ref={videoRef}
                                             src={screenRecording}
                                             poster={screenPoster}
                                             controls
                                             controlsList="nodownload noplaybackrate"
                                             disablePictureInPicture
                                             onContextMenu={(e) => e.preventDefault()}
-                                            className="w-full h-full object-cover"
+                                            onClick={(e) => {
+                                                const video = videoRef.current
+                                                if (video) {
+                                                    if (video.paused) {
+                                                        video.play()
+                                                    } else {
+                                                        video.pause()
+                                                    }
+                                                }
+                                            }}
+                                            className="w-full h-full object-cover cursor-pointer"
                                             playsInline
                                             preload="none"
                                         />
