@@ -370,8 +370,8 @@ export const hobbyProjects: Project[] = [
         content: "起因: 批量处理大量图片时，内存一直在涨。思路: 发现 Python 不会自动把用完的“垃圾”清理干净。我加上了强制清理内存的代码，哪怕连续跑一万张图，内存占用也是平稳的。结果: 内存占用稳定了。"
       },
       {
-        title: "心得: 代码只是翻译",
-        content: "只要我清楚逻辑——比如图片怎么处理、出错了怎么办——AI 就能帮我把这些逻辑翻译成代码。"
+        title: "深度复盘: PyTorch + PyQt5 DLL 冲突终极解决方案",
+        content: "起因: 在 Windows 环境下，PyTorch 和 PyQt5 因共享底层依赖 (OpenSSL/MKL) 及 multiprocessing 的 spawn 机制导致严重的 DLL 加载冲突 (WinError 1114)。思路: 放弃常规的 import 调整，重构为三层进程隔离架构。Launcher 入口保持纯净，主进程独占 Qt5 GUI，子进程独占 PyTorch AI 推理，确保两者永不相见。结果: 彻底根治了 DLL 冲突，同时实现了 GUI 秒开。收获: 解决复杂依赖问题的最佳路径往往不是“修复”，而是“隔离”。"
       },
       {
         title: "心得: 享受报错",
